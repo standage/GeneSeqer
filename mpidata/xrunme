@@ -1,0 +1,21 @@
+#!/bin/csh -f
+#
+
+set np = 6
+
+ cd ../data
+ MakeArray ATest1; MakeArray ATest2
+ cd ../mpidata
+
+ time ../bin/GeneSeqer -s Arabidopsis -d ../data/ATest1 ../data/ATest2 \
+ 	-g ../data/U89959 > out.gbA
+
+#Open MPI version:
+time mpirun \
+	-np "$np" ../bin/GeneSeqerMPI -s Arabidopsis \
+	-d ../data/ATest1 ../data/ATest2 \
+ 	-g ../data/U89959 > out.gbA.MPI"$np"
+
+#
+#qsub gsMPI.sh
+

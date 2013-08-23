@@ -1,0 +1,31 @@
+PLATFORM = AN6PLAT
+INCLDIR  = ../include
+BINDIR   = ../bin
+CFLAGS   = -D$(PLATFORM) -DMPI -I$(INCLDIR)
+
+MPIHOME  = /usr/lib64/openmpi
+MPICC    = $(MPIHOME)/bin/mpicc -I/usr/include/openmpi-x86_64 -pthread -m64 -pthread -m64 -L/usr/lib64/openmpi/lib -lmpi -ldl
+
+
+all:	GeneSeqerMPI
+
+
+GOBJS    = getgbs.o \
+	   getlns.o \
+	   getlps.o \
+	   list.o \
+	   result.o \
+	   sahmtd.o \
+	   sahmtp.o \
+	   SufArray.o \
+	   EstData.o \
+	   LcpTree.o \
+	   RawTextFile.o \
+	   TopsPage.o \
+	   TopsPost.o \
+	   TopsSeq.o \
+	   TopsWire.o
+
+GeneSeqerMPI:	$(GOBJS)
+	$(MPICC) $(CFLAGS) GeneSeqer.c $(GOBJS) -lm \
+	-o $(BINDIR)/GeneSeqerMPI

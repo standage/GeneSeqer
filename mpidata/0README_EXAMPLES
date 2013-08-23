@@ -1,0 +1,43 @@
+GeneSeqer-MPI - README_EXAMPLES                                (October 8, 2008)
+________________________________________________________________________________
+
+I. Set the number of processors (x) in the lines
+
+set np = x
+
+in x*.
+
+
+II. Example:
+
+(Comment out the MakeArray associated lines in xrunme if you have not generated
+ the indices for ATest1 and ATest2 in ../data in a previous step.)
+
+xrunme
+
+  should produce out.gbA, the single processor output as in ../data, and
+  out.gbA.MPIx, the output produced by the MPI version with x processors.
+
+xdiff
+
+  will show the differences between your output files and the supplied
+  originals.  When comparing out.gbA with out.gbA.MPIx, EST sequence numbers
+  could change, but otherwise the output should be identical.
+
+
+NOTE: We are novices to MPI programming and this implementation is our naive
+      attempt.  There may well be better ways to do this and you may be the one
+      to implement them!  If you like, please let us know.
+
+      Volker Brendel, vbrendel@iastate.edu
+
+
+ADDITIONAL NOTES:
+
+(1) xrunme has a commented out command line version using mpirun which you can
+    try if you are not using a job scheduler.
+
+(3) gsMPIt.sh is identical to gsMPI.sh, but invokes the binary GeneSeqerMPIt
+    produced in ../src with "make -f makefile.lnxMPIt".  This generates a bunch
+    of time stamps that may be useful for evaluating performance of the code
+    in various phases.  You may find "xtimes" useful to parse the output.

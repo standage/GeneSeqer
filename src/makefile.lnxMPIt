@@ -1,0 +1,31 @@
+PLATFORM = AN6PLAT
+INCLDIR  = ../include
+BINDIR   = ../bin
+CFLAGS   = -D$(PLATFORM) -DMPI -DMPITIMING -I$(INCLDIR)
+
+MPIHOME  = /opt/mpich/gnu
+MPICC    = $(MPIHOME)/bin/mpicc
+
+
+all:	GeneSeqerMPIt
+
+
+GOBJS    = getgbs.o \
+	   getlns.o \
+	   getlps.o \
+	   list.o \
+	   result.o \
+	   sahmtd.o \
+	   sahmtp.o \
+	   SufArray.o \
+	   EstData.o \
+	   LcpTree.o \
+	   RawTextFile.o \
+	   TopsPage.o \
+	   TopsPost.o \
+	   TopsSeq.o \
+	   TopsWire.o
+
+GeneSeqerMPIt:	$(GOBJS)
+	$(MPICC) $(CFLAGS) GeneSeqer.c $(GOBJS) -lm \
+	-o $(BINDIR)/GeneSeqerMPIt
