@@ -1,4 +1,4 @@
-GeneSeqer-5.0 - README_EXAMPLES                                (August 16, 2012)
+GeneSeqer-5.1 - README_EXAMPLES                              (February 15, 2014)
 ________________________________________________________________________________
 
 
@@ -102,11 +102,11 @@ ________________________________________________________________________________
 #date
 #   ../bin/GeneSeqer -s Arabidopsis -d ATest1 ATest2 -M 40000 -g U89959 > outM40.gbA
 
-# Note: The option "-M 40000" specifies that the genomic sequence is processed in
-#       segments of size 40000.  This limits memory usage, at some additional
-#       processing time cost. The default value is set to 300000.
+# Note: The option "-M 60000" specifies that the genomic sequence is processed in
+#       segments of size 60000.  This limits memory usage, at some additional
+#       processing time cost. The default value is set to 240000.
 #date
-#    diff outM40.gbA outM40.gbA.orig
+#    diff outM60.gbA outM60.gbA.orig
 
 #          Input in library file format: 
 #

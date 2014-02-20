@@ -30,7 +30,7 @@ time /T
    ..\bin\GeneSeqer -s Arabidopsis -d ATest1 ATest2 -w 0.8 -g U89959 > out.gbA8w
 time /T
 time /T
-   ..\bin\GeneSeqer -s Arabidopsis -d ATest1 ATest2 -M 40000 -g U89959 > outM40.gbA
+   ..\bin\GeneSeqer -s Arabidopsis -d ATest1 ATest2 -M 60000 -g U89959 > outM60.gbA
 time /T
 time /T
    ..\bin\GeneSeqer -s Arabidopsis -d ATest1 ATest2 -R -l L89959 > out.faA

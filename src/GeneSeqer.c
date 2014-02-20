@@ -1,81 +1,41 @@
-/* GeneSeqer.c;                                 Last update: October 8, 2008. */
+/* GeneSeqer.c;                               Last update: February 15, 2014. */
 /* Dependencies:   getgbs.c getlns.c getlps.c sahmtd.c sahmtp.c               */
 /* Bugs:                                                                      */
 
 /* Corresponding author:                                                      */
-/*   Volker Brendel, Department of Genetics, Development and Cell Biology     */
-/*   Iowa State University, Ames, IA 50010-3260;                              */
-/*   (515) 294-9884, vbrendel@iastate.edu                                     */
 
-/* Contributing authors:                                                      */
+/*   Volker Brendel, Department of Biology                                    */
+/*   Indiana University, Bloomington, IN 47405                                */
+/*   (812) 855-7074, vbrendel@indiana.edu                                     */
+
+/* Past contributing authors:                                                 */
 /*   Jonathan Usuka, Department of Chemistry, Stanford University             */
 /*   Wei Zhu, Department of Zoology & Genetics, Iowa State University         */
 /*   Fred Goodman, VisualMetrics Corporation                                  */
 /*   George Juras, VisualMetrics Corporation                                  */
-/*   Michael Sparks, Department of Genetics, Development and Cell Biology     */
+/*   Michael Sparks, Department of Genetics, Development and Cell Biology,    */
+/*    Iowa State University                                                   */
 
 /*******************************************************************************
 
-                Research License for GeneSeqer ("Product")
+    Copyright (C) 2012-2014 Volker Brendel.
 
-Copyright © 2000 Iowa State University Research Foundation, Inc. and Stanford
-University
-All rights reserved
+    This file is part of GeneSeqer.
 
-This material is based on work supported by the National Science Foundation
-under Grant No. 9872657 and 9734893.
+    GeneSeqer is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
 
-READ THIS LICENSE AGREEMENT CAREFULLY BEFORE USING THIS PRODUCT. BY USING THIS
-PRODUCT YOU INDICATE YOUR ACCEPTANCE OF THE TERMS OF THE FOLLOWING AGREEMENT.
-THESE TERMS APPLY TO YOU AND ANY SUBSEQUENT LICENSEE OF THIS PRODUCT.
+    GeneSeqer is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
 
-Iowa State University Research Foundation, Inc. and Stanford University
-(collectively the "Licensor") retain the ownership of this copy and any
-subsequent copies of the Product. Licensor grants to Licensee, a U.S.
-Governmental agency or a non-profit educational institution ("Licensee"), a
-non-exclusive, royalty free, non-transferable license to use the copy of the
-Product in accordance with the terms and conditions of this License Agreement.
+    You should have received a copy of the GNU General Public License
+    along with GeneSeqer.  If not, see <http://www.gnu.org/licenses/>.
 
-1. Permitted Uses.  Licensee may:
-
-a) use the Product solely for Licensee's own internal research purposes.
-b) alter, modify, or adapt the Product for Licensee's own internal research
-   purposes.
-
-2. Prohibited Uses.  Licensee may not:
-
-a) transfer, distribute, lease or sub-license the Product.
-b) use the Product for any commercial purpose.
-c) charge for access or viewing of the Product.
-d) alter, modify, or adapt the Product or documentation, or portions thereof
-   except as provided herein.
-
-Limited Warranty and Liability
-______________________________
-
-LICENSOR MAKES NO WARRANTY OR REPRESENTATION, EITHER EXPRESS OR IMPLIED, WITH
-RESPECT TO THE PRODUCT, INCLUDING ITS QUALITY, PERFORMANCE, MERCHANTABILITY,
-OR FITNESS FOR A PARTICULAR PURPOSE OR THAT THE USE OF THE PRODUCT OR
-DOCUMENTATION WILL NOT INFRINGE ANY PATENTS, COPYRIGHTS, TRADEMARKS, OR OTHER
-RIGHTS. THE PRODUCT PROVIDED HEREUNDER IS ON AN "AS IS" BASIS.  IN NO EVENT WILL
-LICENSOR BE LIABLE FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL
-DAMAGES ARISING OUT OF THE USE OR INABILITY TO USE THE PRODUCT OR DOCUMENTATION,
-EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-
-General
-_______
-
-Licensor retains all rights not expressly granted herein. Nothing in this
-License Agreement constitutes a waiver of Licensor's rights under United States
-copyright law. This License and Licensee's right to use the Product
-automatically terminate without notice from Licensor if Licensee fails to
-comply with any provision of this License Agreement, or any terms and conditions
-associated with the transfer of this Product. Upon termination, you will remove
-and destroy all copies of the Product. This License Agreement is governed by the
-laws of the State of Iowa.
 *******************************************************************************/
-
-
 
 
 
@@ -316,8 +276,8 @@ static char estdbfnames[MAXDBNUM][257];
 
 int frompA, top, htmlop, ifwdth;
 char gdnafname[257];
-int SGMNTSZE = 300000;
 int SGMNTSHFT = MAXGLGTH - 3;
+int SGMNTSZE = 6 * (MAXGLGTH - 3);
 int INCRPP = 20000;
 
 int getlps(int Selection, char detsz, char noffset, char *sfname, char *seq);
@@ -1356,6 +1316,7 @@ int main(int argc, char *argv[])
 	break;
       case 'M':
 	SGMNTSZE = atoi(argv[i + 1]);
+	if (SGMNTSZE < 3 * SGMNTSHFT) SGMNTSZE = 3 * SGMNTSHFT;
 	anum += 2;
 	break;
       case 'x':
@@ -1420,10 +1381,10 @@ int main(int argc, char *argv[])
 	break;
       case 'o':
 	oflag = 1;
+	strcpy(outfname, argv[i + 1]);
 #ifdef MPI
 	if (MPIV_rank == 0) {
 #endif
-	strcpy(outfname, argv[i + 1]);
 	if ((outfp = fopen(outfname, "w")) == NULL) {
 	  fprintf(stderr, "File %s cannot be opened.\n", outfname);
 	  perror(outfname);
@@ -1436,10 +1397,10 @@ int main(int argc, char *argv[])
 	break;
       case 'O':
 	oflag = 2;
+	strcpy(outfname, argv[i + 1]);
 #ifdef MPI
 	if (MPIV_rank == 0) {
 #endif
-	strcpy(outfname, argv[i + 1]);
 	if ((outfp = fopen(outfname, "w")) == NULL) {
 	  fprintf(stderr, "File %s cannot be opened.\n", outfname);
 	  perror(outfname);
@@ -1481,7 +1442,7 @@ int main(int argc, char *argv[])
 
 #ifdef MPI
    if (MPIV_rank > 0) {
-     sprintf(MPIV_outputfile,"MPI_output_prc%d",MPIV_rank);
+     sprintf(MPIV_outputfile,"%s_MPI_logfile_prc%d",outfname,MPIV_rank);
      if ( (outfp= fopen(MPIV_outputfile,"w")) == NULL ) {
        fprintf(stderr,"File %s cannot be opened.\n",MPIV_outputfile);
        perror(MPIV_outputfile); exit(-1);
@@ -1549,7 +1510,7 @@ int main(int argc, char *argv[])
     fprintf(outfp, "<A NAME=\"TOP\"></A>\n");
   }
 
-  fprintf(outfp, "GeneSeqer.   Version of October 8, 2008.\n");
+  fprintf(outfp, "GeneSeqer.   Version of February 15, 2014.\n");
   fprintf(outfp, "Date run: %s\n", ctime(&tlc));
 #ifdef DAPBM
   if (Species < NMDLS)
@@ -1576,7 +1537,7 @@ int main(int argc, char *argv[])
   if (oflag == 1) {
     if (htmlop)
       fprintf(stdout, "<A NAME=\"TOP\"></A>\n");
-    fprintf(stdout, "GeneSeqer.   Version of October 8, 2008.\n");
+    fprintf(stdout, "GeneSeqer.   Version of February 15, 2014.\n");
     fprintf(stdout, "Date run: %s\n", ctime(&tlc));
 #ifdef DAPBM
     if (Species < NMDLS)
@@ -2319,7 +2280,7 @@ void doit(int numbp, int ia, int ib, int rflag, int maxnest)
 	if ((cdna = (char *) calloc(estlg , sizeof(char))) == NULL) {
 	  fatal_error("Error: memory allocation failed. Exit.\n");
 	}
-	if (CHECKFLAG) fprintf(stdout,"\nALLOC_CDNA1 %d # %d",(int)cdna,++NALLOC_CDNA);
+	if (CHECKFLAG) fprintf(stdout,"\nALLOC_CDNA1 %ld # %d",(long)cdna,++NALLOC_CDNA);
 	estlg = getlns(EST_FILE, 0, enoffset, sfname, cdna);
 	strcpy(efname, sfname);
 	strcat(efname, "+");
@@ -2346,7 +2307,7 @@ void doit(int numbp, int ia, int ib, int rflag, int maxnest)
 	  gia = (left > ia) ? left : ia;
 	  gib = (right < ib) ? right : ib;
 	  if ((ib < TOPOS && gib == ib) || (ia > FROMPOS && gib <= ia + SGMNTSHFT)) {
-	    if (CHECKFLAG) fprintf(stdout,"\nNDEALLOC_CDNA1 %d # %d",(int)cdna,++NDEALLOC_CDNA);
+	    if (CHECKFLAG) fprintf(stdout,"\nNDEALLOC_CDNA1 %ld # %d",(long)cdna,++NDEALLOC_CDNA);
 	    free(cdna);
 	    --lecnt;
 	    --gecnt;
@@ -2358,7 +2319,7 @@ MPIV_bsend = MPI_Wtime();
 	    MPI_Send(&gca_buf,1,MPI_gca,0,MPIV_tag,MPI_COMM_WORLD);
 #ifdef MPITIMING
 MPIV_asend = MPI_Wtime();
-printf("\nTIME-send01 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)",
+printf("\nTIME-send01 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)\n",
 	MPIV_asend - MPIV_bsend, MPIV_rank, ecount, estdbn, rflag);
 fflush(stdout);
 #endif
@@ -2387,7 +2348,7 @@ only part of a significant alignment.\n",
 	    dfname[strlen(dfname) - 1] = '-';
 	    if ((gcaR = (struct gcalgnmnt *) calloc(1 , sizeof(struct gcalgnmnt))) == NULL)
 	      fatal_error("Error: memory allocation failed. Exit.\n");
-	    if (CHECKFLAG) fprintf(stdout,"\nALLOC_GCA1 %d # %d",(int)gcaR,++NALLOC_GCA);
+	    if (CHECKFLAG) fprintf(stdout,"\nALLOC_GCA1 %ld # %d",(long)gcaR,++NALLOC_GCA);
 	    strcpy(gcaR->gname, dfname);
 	    strcpy(gcaR->gsgmntn, gsgmntn);
 	    strcpy(gcaR->cname, efname);
@@ -2410,7 +2371,7 @@ MPIV_bsend = MPI_Wtime();
 		MPI_Send(&gca_buf,1,MPI_gca,0,MPIV_tag,MPI_COMM_WORLD);
 #ifdef MPITIMING
 MPIV_asend = MPI_Wtime();
-printf("\nTIME-send02 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)",
+printf("\nTIME-send02 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)\n",
 	MPIV_asend - MPIV_bsend, MPIV_rank, ecount, estdbn, rflag);
 fflush(stdout);
 #endif
@@ -2429,7 +2390,7 @@ MPIV_bsend = MPI_Wtime();
 		MPI_Send(&gca_buf,1,MPI_gca,0,MPIV_tag,MPI_COMM_WORLD);
 #ifdef MPITIMING
 MPIV_asend = MPI_Wtime();
-printf("\nTIME-send03 %9.6f Processor %2d alignment %5d (EST %d %s %4d, db %s, rflag %d)",
+printf("\nTIME-send03 %9.6f Processor %2d alignment %5d (EST %d %s %4d, db %s, rflag %d)\n",
 	MPIV_asend - MPIV_bsend, MPIV_rank, ecount, gca_buf.calln, gca_buf.cname, gca_buf.clgth, estdbn, rflag);
 fflush(stdout);
 #endif
@@ -2441,7 +2402,7 @@ fflush(stdout);
 	  else {
 	    if ((gca = (struct gcalgnmnt *) calloc(1 , sizeof(struct gcalgnmnt))) == NULL)
 	      fatal_error("Error: memory allocation failed. Exit.\n");
-	    if (CHECKFLAG) fprintf(stdout,"\nALLOC_GCA2 %d # %d",(int)gca,++NALLOC_GCA);
+	    if (CHECKFLAG) fprintf(stdout,"\nALLOC_GCA2 %ld # %d",(long)gca,++NALLOC_GCA);
 	    strcpy(gca->gname, dfname);
 	    strcpy(gca->gsgmntn, gsgmntn);
 	    strcpy(gca->cname, efname);
@@ -2465,7 +2426,7 @@ MPIV_bsend = MPI_Wtime();
 		  MPI_Send(&gca_buf,1,MPI_gca,0,MPIV_tag,MPI_COMM_WORLD);
 #ifdef MPITIMING
 MPIV_asend = MPI_Wtime();
-printf("\nTIME-send04 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)",
+printf("\nTIME-send04 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)\n",
 	MPIV_asend - MPIV_bsend, MPIV_rank, ecount, estdbn, rflag);
 fflush(stdout);
 #endif
@@ -2484,7 +2445,7 @@ MPIV_bsend = MPI_Wtime();
 		  MPI_Send(&gca_buf,1,MPI_gca,0,MPIV_tag,MPI_COMM_WORLD);
 #ifdef MPITIMING
 MPIV_asend = MPI_Wtime();
-printf("\nTIME-send05 %9.6f Processor %2d alignment %5d (EST %d %s %4d, db %s, rflag %d)",
+printf("\nTIME-send05 %9.6f Processor %2d alignment %5d (EST %d %s %4d, db %s, rflag %d)\n",
 	MPIV_asend - MPIV_bsend, MPIV_rank, ecount, gca_buf.calln, gca_buf.cname, gca_buf.clgth, estdbn, rflag);
 fflush(stdout);
 #endif
@@ -2510,7 +2471,7 @@ fflush(stdout);
 		  dfname[strlen(dfname) - 1] = '-';
 		  if ((gcaR = (struct gcalgnmnt *) calloc(1 , sizeof(struct gcalgnmnt))) == NULL)
 		    fatal_error("Error: memory allocation failed. Exit.\n");
-		  if (CHECKFLAG) fprintf(stdout,"\nALLOC_GCA3 %d # %d",(int)gcaR,++NALLOC_GCA);
+		  if (CHECKFLAG) fprintf(stdout,"\nALLOC_GCA3 %ld # %d",(long)gcaR,++NALLOC_GCA);
 		  strcpy(gcaR->gname, dfname);
 		  strcpy(gcaR->gsgmntn, gsgmntn);
 		  strcpy(gcaR->cname, efname);
@@ -2542,7 +2503,7 @@ MPIV_bsend = MPI_Wtime();
 	 		MPI_Send(&gca_buf,1,MPI_gca,0,MPIV_tag,MPI_COMM_WORLD);
 #ifdef MPITIMING
 MPIV_asend = MPI_Wtime();
-printf("\nTIME-send06 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)",
+printf("\nTIME-send06 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)\n",
 	MPIV_asend - MPIV_bsend, MPIV_rank, ecount, estdbn, rflag);
 fflush(stdout);
 #endif
@@ -2561,7 +2522,7 @@ MPIV_bsend = MPI_Wtime();
 	 		MPI_Send(&gca_buf,1,MPI_gca,0,MPIV_tag,MPI_COMM_WORLD);
 #ifdef MPITIMING
 MPIV_asend = MPI_Wtime();
-printf("\nTIME-send07 %9.6f Processor %2d alignment %5d (EST %d %s %4d, db %s, rflag %d)",
+printf("\nTIME-send07 %9.6f Processor %2d alignment %5d (EST %d %s %4d, db %s, rflag %d)\n",
 	MPIV_asend - MPIV_bsend, MPIV_rank, ecount, gca_buf.calln, gca_buf.cname, gca_buf.clgth, estdbn, rflag);
 fflush(stdout);
 #endif
@@ -2582,7 +2543,7 @@ MPIV_bsend = MPI_Wtime();
 	 		MPI_Send(&gca_buf,1,MPI_gca,0,MPIV_tag,MPI_COMM_WORLD);
 #ifdef MPITIMING
 MPIV_asend = MPI_Wtime();
-printf("\nTIME-send08 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)",
+printf("\nTIME-send08 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)\n",
 	MPIV_asend - MPIV_bsend, MPIV_rank, ecount, estdbn, rflag);
 fflush(stdout);
 #endif
@@ -2601,7 +2562,7 @@ MPIV_bsend = MPI_Wtime();
 	 		MPI_Send(&gca_buf,1,MPI_gca,0,MPIV_tag,MPI_COMM_WORLD);
 #ifdef MPITIMING
 MPIV_asend = MPI_Wtime();
-printf("\nTIME-send09 %9.6f Processor %2d alignment %5d (EST %d %s %4d, db %s, rflag %d)",
+printf("\nTIME-send09 %9.6f Processor %2d alignment %5d (EST %d %s %4d, db %s, rflag %d)\n",
 	MPIV_asend - MPIV_bsend, MPIV_rank, ecount, gca_buf.calln, gca_buf.cname, gca_buf.clgth, estdbn, rflag);
 fflush(stdout);
 #endif
@@ -2623,7 +2584,7 @@ MPIV_bsend = MPI_Wtime();
 	 	      MPI_Send(&gca_buf,1,MPI_gca,0,MPIV_tag,MPI_COMM_WORLD);
 #ifdef MPITIMING
 MPIV_asend = MPI_Wtime();
-printf("\nTIME-send10 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)",
+printf("\nTIME-send10 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)\n",
 	MPIV_asend - MPIV_bsend, MPIV_rank, ecount, estdbn, rflag);
 fflush(stdout);
 #endif
@@ -2642,7 +2603,7 @@ MPIV_bsend = MPI_Wtime();
 	 	      MPI_Send(&gca_buf,1,MPI_gca,0,MPIV_tag,MPI_COMM_WORLD);
 #ifdef MPITIMING
 MPIV_asend = MPI_Wtime();
-printf("\nTIME-send11 %9.6f Processor %2d alignment %5d (EST %d %s %4d, db %s, rflag %d)",
+printf("\nTIME-send11 %9.6f Processor %2d alignment %5d (EST %d %s %4d, db %s, rflag %d)\n",
 	MPIV_asend - MPIV_bsend, MPIV_rank, ecount, gca_buf.calln, gca_buf.cname, gca_buf.clgth, estdbn, rflag);
 fflush(stdout);
 #endif
@@ -2665,7 +2626,7 @@ MPIV_bsend = MPI_Wtime();
 		    MPI_Send(&gca_buf,1,MPI_gca,0,MPIV_tag,MPI_COMM_WORLD);
 #ifdef MPITIMING
 MPIV_asend = MPI_Wtime();
-printf("\nTIME-send12 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)",
+printf("\nTIME-send12 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)\n",
 	MPIV_asend - MPIV_bsend, MPIV_rank, ecount, estdbn, rflag);
 fflush(stdout);
 #endif
@@ -2684,7 +2645,7 @@ MPIV_bsend = MPI_Wtime();
 	 	    MPI_Send(&gca_buf,1,MPI_gca,0,MPIV_tag,MPI_COMM_WORLD);
 #ifdef MPITIMING
 MPIV_asend = MPI_Wtime();
-printf("\nTIME-send13 %9.6f Processor %2d alignment %5d (EST %d %s %4d, db %s, rflag %d)",
+printf("\nTIME-send13 %9.6f Processor %2d alignment %5d (EST %d %s %4d, db %s, rflag %d)\n",
 	MPIV_asend - MPIV_bsend, MPIV_rank, ecount, gca_buf.calln, gca_buf.cname, gca_buf.clgth, estdbn, rflag);
 fflush(stdout);
 #endif
@@ -2705,7 +2666,7 @@ MPIV_bsend = MPI_Wtime();
 	      MPI_Send(&gca_buf,1,MPI_gca,0,MPIV_tag,MPI_COMM_WORLD);
 #ifdef MPITIMING
 MPIV_asend = MPI_Wtime();
-printf("\nTIME-send14 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)",
+printf("\nTIME-send14 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)\n",
 	MPIV_asend - MPIV_bsend, MPIV_rank, ecount, estdbn, rflag);
 fflush(stdout);
 #endif
@@ -2719,7 +2680,7 @@ fflush(stdout);
 	  gib = (right < ibR) ? right : ibR;
 	  if ((iaR > numbp - 1 - TOPOS && gia == iaR) ||
 	      (ibR < numbp - 1 - FROMPOS && gia >= ibR - SGMNTSHFT)) {
-	    if (CHECKFLAG) fprintf(stdout,"\nNDEALLOC_CDNA2 %d # %d",(int)cdna,++NDEALLOC_CDNA);
+	    if (CHECKFLAG) fprintf(stdout,"\nNDEALLOC_CDNA2 %ld # %d",(long)cdna,++NDEALLOC_CDNA);
 	    free(cdna);
 	    --lecnt;
 	    --gecnt;
@@ -2731,7 +2692,7 @@ MPIV_bsend = MPI_Wtime();
 	    MPI_Send(&gca_buf,1,MPI_gca,0,MPIV_tag,MPI_COMM_WORLD);
 #ifdef MPITIMING
 MPIV_asend = MPI_Wtime();
-printf("\nTIME-send15 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)",
+printf("\nTIME-send15 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)\n",
 	MPIV_asend - MPIV_bsend, MPIV_rank, ecount, estdbn, rflag);
 fflush(stdout);
 #endif
@@ -2761,7 +2722,7 @@ only part of a significant alignment.\n",
 	    dfname[strlen(dfname) - 1] = '+';
 	    if ((gcaR = (struct gcalgnmnt *) calloc(1 , sizeof(struct gcalgnmnt))) == NULL)
 	      fatal_error("Error: memory allocation failed. Exit.\n");
-	    if (CHECKFLAG) fprintf(stdout,"\nALLOC_GCA4 %d # %d",(int)gcaR,++NALLOC_GCA);
+	    if (CHECKFLAG) fprintf(stdout,"\nALLOC_GCA4 %ld # %d",(long)gcaR,++NALLOC_GCA);
 	    strcpy(gcaR->gname, dfname);
 	    strcpy(gcaR->gsgmntn, gsgmntn);
 	    strcpy(gcaR->cname, efname);
@@ -2784,7 +2745,7 @@ MPIV_bsend = MPI_Wtime();
 		MPI_Send(&gca_buf,1,MPI_gca,0,MPIV_tag,MPI_COMM_WORLD);
 #ifdef MPITIMING
 MPIV_asend = MPI_Wtime();
-printf("\nTIME-send16 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)",
+printf("\nTIME-send16 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)\n",
 	MPIV_asend - MPIV_bsend, MPIV_rank, ecount, estdbn, rflag);
 fflush(stdout);
 #endif
@@ -2803,7 +2764,7 @@ MPIV_bsend = MPI_Wtime();
 		MPI_Send(&gca_buf,1,MPI_gca,0,MPIV_tag,MPI_COMM_WORLD);
 #ifdef MPITIMING
 MPIV_asend = MPI_Wtime();
-printf("\nTIME-send17 %9.6f Processor %2d alignment %5d (EST %d %s %4d, db %s, rflag %d)",
+printf("\nTIME-send17 %9.6f Processor %2d alignment %5d (EST %d %s %4d, db %s, rflag %d)\n",
 	MPIV_asend - MPIV_bsend, MPIV_rank, ecount, gca_buf.calln, gca_buf.cname, gca_buf.clgth, estdbn, rflag);
 fflush(stdout);
 #endif
@@ -2815,7 +2776,7 @@ fflush(stdout);
 	  else {
 	    if ((gca = (struct gcalgnmnt *) calloc(1 , sizeof(struct gcalgnmnt))) == NULL)
 	      fatal_error("Error: memory allocation failed. Exit.\n");
-	    if (CHECKFLAG) fprintf(stdout,"\nALLOC_GCA5 %d # %d",(int)gca,++NALLOC_GCA);
+	    if (CHECKFLAG) fprintf(stdout,"\nALLOC_GCA5 %ld # %d",(long)gca,++NALLOC_GCA);
 	    strcpy(gca->gname, dfname);
 	    strcpy(gca->gsgmntn, gsgmntn);
 	    strcpy(gca->cname, efname);
@@ -2839,7 +2800,7 @@ MPIV_bsend = MPI_Wtime();
 		  MPI_Send(&gca_buf,1,MPI_gca,0,MPIV_tag,MPI_COMM_WORLD);
 #ifdef MPITIMING
 MPIV_asend = MPI_Wtime();
-printf("\nTIME-send18 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)",
+printf("\nTIME-send18 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)\n",
 	MPIV_asend - MPIV_bsend, MPIV_rank, ecount, estdbn, rflag);
 fflush(stdout);
 #endif
@@ -2858,7 +2819,7 @@ MPIV_bsend = MPI_Wtime();
 		  MPI_Send(&gca_buf,1,MPI_gca,0,MPIV_tag,MPI_COMM_WORLD);
 #ifdef MPITIMING
 MPIV_asend = MPI_Wtime();
-printf("\nTIME-send19 %9.6f Processor %2d alignment %5d (EST %d %s %4d, db %s, rflag %d)",
+printf("\nTIME-send19 %9.6f Processor %2d alignment %5d (EST %d %s %4d, db %s, rflag %d)\n",
 	MPIV_asend - MPIV_bsend, MPIV_rank, ecount, gca_buf.calln, gca_buf.cname, gca_buf.clgth, estdbn, rflag);
 fflush(stdout);
 #endif
@@ -2884,7 +2845,7 @@ fflush(stdout);
 		  dfname[strlen(dfname) - 1] = '+';
 		  if ((gcaR = (struct gcalgnmnt *) calloc(1 , sizeof(struct gcalgnmnt))) == NULL)
 		    fatal_error("Error: memory allocation failed. Exit.\n");
-		  if (CHECKFLAG) fprintf(stdout,"\nALLOC_GCA6 %d # %d",(int)gcaR,++NALLOC_GCA);
+		  if (CHECKFLAG) fprintf(stdout,"\nALLOC_GCA6 %ld # %d",(long)gcaR,++NALLOC_GCA);
 		  strcpy(gcaR->gname, dfname);
 		  strcpy(gcaR->gsgmntn, gsgmntn);
 		  strcpy(gcaR->cname, efname);
@@ -2916,7 +2877,7 @@ MPIV_bsend = MPI_Wtime();
 			MPI_Send(&gca_buf,1,MPI_gca,0,MPIV_tag,MPI_COMM_WORLD);
 #ifdef MPITIMING
 MPIV_asend = MPI_Wtime();
-printf("\nTIME-send20 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)",
+printf("\nTIME-send20 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)\n",
 	MPIV_asend - MPIV_bsend, MPIV_rank, ecount, estdbn, rflag);
 fflush(stdout);
 #endif
@@ -2935,7 +2896,7 @@ MPIV_bsend = MPI_Wtime();
 			MPI_Send(&gca_buf,1,MPI_gca,0,MPIV_tag,MPI_COMM_WORLD);
 #ifdef MPITIMING
 MPIV_asend = MPI_Wtime();
-printf("\nTIME-send21 %9.6f Processor %2d alignment %5d (EST %d %s %4d, db %s, rflag %d)",
+printf("\nTIME-send21 %9.6f Processor %2d alignment %5d (EST %d %s %4d, db %s, rflag %d)\n",
 	MPIV_asend - MPIV_bsend, MPIV_rank, ecount, gca_buf.calln, gca_buf.cname, gca_buf.clgth, estdbn, rflag);
 fflush(stdout);
 #endif
@@ -2956,7 +2917,7 @@ MPIV_bsend = MPI_Wtime();
 			MPI_Send(&gca_buf,1,MPI_gca,0,MPIV_tag,MPI_COMM_WORLD);
 #ifdef MPITIMING
 MPIV_asend = MPI_Wtime();
-printf("\nTIME-send22 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)",
+printf("\nTIME-send22 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)\n",
 	MPIV_asend - MPIV_bsend, MPIV_rank, ecount, estdbn, rflag);
 fflush(stdout);
 #endif
@@ -2975,7 +2936,7 @@ MPIV_bsend = MPI_Wtime();
 			MPI_Send(&gca_buf,1,MPI_gca,0,MPIV_tag,MPI_COMM_WORLD);
 #ifdef MPITIMING
 MPIV_asend = MPI_Wtime();
-printf("\nTIME-send23 %9.6f Processor %2d alignment %5d (EST %d %s %4d, db %s, rflag %d)",
+printf("\nTIME-send23 %9.6f Processor %2d alignment %5d (EST %d %s %4d, db %s, rflag %d)\n",
 	MPIV_asend - MPIV_bsend, MPIV_rank, ecount, gca_buf.calln, gca_buf.cname, gca_buf.clgth, estdbn, rflag);
 fflush(stdout);
 #endif
@@ -2997,7 +2958,7 @@ MPIV_bsend = MPI_Wtime();
 		      MPI_Send(&gca_buf,1,MPI_gca,0,MPIV_tag,MPI_COMM_WORLD);
 #ifdef MPITIMING
 MPIV_asend = MPI_Wtime();
-printf("\nTIME-send24 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)",
+printf("\nTIME-send24 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)\n",
 	MPIV_asend - MPIV_bsend, MPIV_rank, ecount, estdbn, rflag);
 fflush(stdout);
 #endif
@@ -3016,7 +2977,7 @@ MPIV_bsend = MPI_Wtime();
 		      MPI_Send(&gca_buf,1,MPI_gca,0,MPIV_tag,MPI_COMM_WORLD);
 #ifdef MPITIMING
 MPIV_asend = MPI_Wtime();
-printf("\nTIME-send25 %9.6f Processor %2d alignment %5d (EST %d %s %4d, db %s, rflag %d)",
+printf("\nTIME-send25 %9.6f Processor %2d alignment %5d (EST %d %s %4d, db %s, rflag %d)\n",
 	MPIV_asend - MPIV_bsend, MPIV_rank, ecount, gca_buf.calln, gca_buf.cname, gca_buf.clgth, estdbn, rflag);
 fflush(stdout);
 #endif
@@ -3039,7 +3000,7 @@ MPIV_bsend = MPI_Wtime();
 		    MPI_Send(&gca_buf,1,MPI_gca,0,MPIV_tag,MPI_COMM_WORLD);
 #ifdef MPITIMING
 MPIV_asend = MPI_Wtime();
-printf("\nTIME-send26 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)",
+printf("\nTIME-send26 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)\n",
 	MPIV_asend - MPIV_bsend, MPIV_rank, ecount, estdbn, rflag);
 fflush(stdout);
 #endif
@@ -3058,7 +3019,7 @@ MPIV_bsend = MPI_Wtime();
 		    MPI_Send(&gca_buf,1,MPI_gca,0,MPIV_tag,MPI_COMM_WORLD);
 #ifdef MPITIMING
 MPIV_asend = MPI_Wtime();
-printf("\nTIME-send27 %9.6f Processor %2d alignment %5d (EST %d %s %4d, db %s, rflag %d)",
+printf("\nTIME-send27 %9.6f Processor %2d alignment %5d (EST %d %s %4d, db %s, rflag %d)\n",
 	MPIV_asend - MPIV_bsend, MPIV_rank, ecount, gca_buf.calln, gca_buf.cname, gca_buf.clgth, estdbn, rflag);
 fflush(stdout);
 #endif
@@ -3079,7 +3040,7 @@ MPIV_bsend = MPI_Wtime();
 	      MPI_Send(&gca_buf,1,MPI_gca,0,MPIV_tag,MPI_COMM_WORLD);
 #ifdef MPITIMING
 MPIV_asend = MPI_Wtime();
-printf("\nTIME-send28 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)",
+printf("\nTIME-send28 %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)\n",
 	MPIV_asend - MPIV_bsend, MPIV_rank, ecount, estdbn, rflag);
 fflush(stdout);
 #endif
@@ -3088,17 +3049,17 @@ fflush(stdout);
 	  }
 	  fflush(outfp);
 	}
-	if (CHECKFLAG) fprintf(stdout,"\nNDEALLOC_CDNA3 %d # %d",(int)cdna,++NDEALLOC_CDNA);
+	if (CHECKFLAG) fprintf(stdout,"\nNDEALLOC_CDNA3 %ld # %d",(long)cdna,++NDEALLOC_CDNA);
 	free(cdna);
 
 #ifdef MPI
 #ifdef MPITIMING
 MPIV_finish = MPI_Wtime();
 if (MPIV_tag == 1) {
-  printf("\nTIME-2send  %9.6f Processor %2d alignment %5d (EST %d %s %4d, db %s, rflag %d)",
+  printf("\nTIME-2send  %9.6f Processor %2d alignment %5d (EST %d %s %4d, db %s, rflag %d)\n",
 	MPIV_finish - MPIV_begec, MPIV_rank, ecount, gca_buf.calln, gca_buf.cname, gca_buf.clgth, estdbn, rflag);
 } else {
-  printf("\nTIME-2send  %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)",
+  printf("\nTIME-2send  %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)\n",
 	MPIV_finish - MPIV_begec, MPIV_rank, ecount, estdbn, rflag);
 }
 fflush(stdout);
@@ -3110,14 +3071,14 @@ fflush(stdout);
 #ifdef MPITIMING
 MPIV_finish = MPI_Wtime();
 if ((MPIV_status).MPI_TAG == 1) {
-  printf("\nIt took %e seconds until the Master Processor received alignment %5d (EST %d %s %4d, db %s, rflag %d) from Processor %2d",
+  printf("\nIt took %e seconds until the Master Processor received alignment %5d (EST %d %s %4d, db %s, rflag %d) from Processor %2d\n",
 	MPIV_finish - MPIV_begin, ecount, gca_buf.calln, gca_buf.cname, gca_buf.clgth, estdbn, rflag, MPIV_source);
-  printf("\nTIME-2recv  %9.6f Processor %2d alignment %5d (EST %d %s %4d, db %s, rflag %d)",
+  printf("\nTIME-2recv  %9.6f Processor %2d alignment %5d (EST %d %s %4d, db %s, rflag %d)\n",
 	MPIV_finish - MPIV_begec, MPIV_source, ecount, gca_buf.calln, gca_buf.cname, gca_buf.clgth, estdbn, rflag);
 } else {
-  printf("\nIt took %e seconds until the Master Processor received alignment %5d (MPI_TAG 0, db %s, rflag %d) from Processor %2d",
+  printf("\nIt took %e seconds until the Master Processor received alignment %5d (MPI_TAG 0, db %s, rflag %d) from Processor %2d\n",
 	MPIV_finish - MPIV_begin, ecount, estdbn, rflag, MPIV_source);
-  printf("\nTIME-2recv  %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)",
+  printf("\nTIME-2recv  %9.6f Processor %2d alignment %5d (MPI_TAG 0, db %s, rflag %d)\n",
 	MPIV_finish - MPIV_begec, MPIV_rank, ecount, estdbn, rflag);
 }
 fflush(stdout);
@@ -3137,7 +3098,7 @@ fflush(stdout);
       closeRawTextFile(EST_FILE);
 #ifdef MPITIMING
       MPIV_finish = MPI_Wtime();
-      printf ("\nProcessor %2d used %e seconds to generate the alignments to database %s for rflag %d",
+      printf ("\nProcessor %2d used %e seconds to generate the alignments to database %s for rflag %d\n",
 		MPIV_rank, MPIV_finish - MPIV_start, estdbn, rflag);
       fflush(stdout);
       MPIV_start = MPI_Wtime();
@@ -3365,141 +3326,141 @@ void MPI_derived_type_gca(struct gcalgnmnt_buf *gca,MPI_Datatype *MPI_gca)
   bl[0]= 257;	
   tl[0]= MPI_CHAR;
   dp[0]= 0;				
-  MPI_Address(gca->gname,&sa);	
+  MPI_Get_address(gca->gname,&sa);	
    
   /* elm 1: char gsgmntn[257] */ 
   bl[1]= 257;
   tl[1]= MPI_CHAR;
-  MPI_Address(gca->gsgmntn,&a);
+  MPI_Get_address(gca->gsgmntn,&a);
   dp[1]= a-sa;
    
   /* elm2: char cname[257] */
   bl[2]= 257;
   tl[2]= MPI_CHAR;
-  MPI_Address(gca->cname,&a);
+  MPI_Get_address(gca->cname,&a);
   dp[2]= a-sa;
    
   /* elm3: char estdbn[257] */
   bl[3]= 257;
   tl[3]= MPI_CHAR;
-  MPI_Address(gca->estdbn,&a);
+  MPI_Get_address(gca->estdbn,&a);
   dp[3]= a-sa;
    
   /* elm4: int calln */
   bl[4]= 1;
   tl[4]= MPI_INT;
-  MPI_Address(&(gca->calln),&a);
+  MPI_Get_address(&(gca->calln),&a);
   dp[4]= a-sa;
    
   /* elm5: int offset */
   bl[5]= 1;
   tl[5]= MPI_INT;
-  MPI_Address(&(gca->offset),&a);
+  MPI_Get_address(&(gca->offset),&a);
   dp[5]= a-sa;
    
   /* elm6: int gia */
   bl[6]= 1;
   tl[6]= MPI_INT;
-  MPI_Address(&(gca->gia),&a);
+  MPI_Get_address(&(gca->gia),&a);
   dp[6]= a-sa;
    
   /* elm7: int gib */
   bl[7]= 1;
   tl[7]= MPI_INT;
-  MPI_Address(&(gca->gib),&a);
+  MPI_Get_address(&(gca->gib),&a);
   dp[7]= a-sa;
    
   /* elm8: int clgth */
   bl[8]= 1;
   tl[8]= MPI_INT;
-  MPI_Address(&(gca->clgth),&a);
+  MPI_Get_address(&(gca->clgth),&a);
   dp[8]= a-sa;
    
   /* elm9: int exn */
   bl[9]= 1;
   tl[9]= MPI_INT;
-  MPI_Address(&(gca->exn),&a);
+  MPI_Get_address(&(gca->exn),&a);
   dp[9]= a-sa;
    
   /* elm10: int gcds[MAXNEXNS][2] */
   bl[10]= MAXNEXNS*2;
   tl[10]= MPI_INT;
-  MPI_Address(&(gca->gcds[0][0]),&a);
+  MPI_Get_address(&(gca->gcds[0][0]),&a);
   dp[10]= a-sa;
    
   /* elm11: int ccds[MAXNEXNS][2] */
   bl[11]= MAXNEXNS*2;
   tl[11]= MPI_INT;
-  MPI_Address(&(gca->ccds[0][0]),&a);
+  MPI_Get_address(&(gca->ccds[0][0]),&a);
   dp[11]= a-sa;   
    
   /* elm12: int ppa[2] */
   bl[12]= 2;
   tl[12]= MPI_INT;
-  MPI_Address(&(gca->ppa),&a);
+  MPI_Get_address(&(gca->ppa),&a);
   dp[12]= a-sa;
    
   /* elm13: float exnscr[MAXNEXNS] */
   bl[13]= MAXNEXNS;
   tl[13]= MPI_FLOAT;
-  MPI_Address(&(gca->exnscr),&a);
+  MPI_Get_address(&(gca->exnscr),&a);
   dp[13]= a-sa;
    
   /* elm14: float itscr[MAXNEXNS][2] */
   bl[14]= MAXNEXNS*2;
   tl[14]= MPI_FLOAT;
-  MPI_Address(&(gca->itrscr),&a);
+  MPI_Get_address(&(gca->itrscr),&a);
   dp[14]= a-sa;
    
   /* elm15: float score */
   bl[15]= 1;
   tl[15]= MPI_FLOAT;
-  MPI_Address(&(gca->score),&a);
+  MPI_Get_address(&(gca->score),&a);
   dp[15]= a-sa;
    
   /* elm16: int pcds[MAXNPPS][MAXNEXNS][2];*/
   bl[16]= 2*MAXNPPS*MAXNEXNS;
   tl[16]= MPI_INT;
-  MPI_Address(&(gca->pcds),&a);
+  MPI_Get_address(&(gca->pcds),&a);
   dp[16]= a-sa;
    
   /* elm17: int npsg[MAXNPPS] */
   bl[17]= MAXNPPS	;
   tl[17]= MPI_INT;
-  MPI_Address(&(gca->npsg),&a);
+  MPI_Get_address(&(gca->npsg),&a);
   dp[17]= a-sa;
    
   /*elm18: int npps; */
   bl[18]= 1;
   tl[18]= MPI_INT;
-  MPI_Address(&(gca->npps),&a);
+  MPI_Get_address(&(gca->npps),&a);
   dp[18]= a-sa;
    
   /*elm19: int ags[MAXNAGS] */
   bl[19]= MAXNAGS;
   tl[19]= MPI_INT;
-  MPI_Address(&(gca->ags),&a);
+  MPI_Get_address(&(gca->ags),&a);
   dp[19]= a-sa;
    
   /* elm20: char algnmnt[6*MAXGLGTH+2*MAXCLGTH+2*MAXNEXNS*80]; */
   bl[20]= 6*MAXGLGTH+2*MAXCLGTH+2*MAXNEXNS*80;
   tl[20]= MPI_CHAR;
-  MPI_Address(gca->algnmnt,&a);
+  MPI_Get_address(gca->algnmnt,&a);
   dp[20]= a-sa;
    
   /* elm21: struct gcalgnmnt *link; */
   bl[21]= 1;
   tl[21]= MPI_INT;
-  MPI_Address(&(gca->link),&a);
+  MPI_Get_address(&(gca->link),&a);
   dp[21]= a-sa;
    
   /* elm22: struct gcalgnmnt *next; */
   bl[22]= 1;
   tl[22]= MPI_INT;
-  MPI_Address(&(gca->next),&a);
+  MPI_Get_address(&(gca->next),&a);
   dp[22]= a-sa;
    
-  MPI_Type_struct(23,bl,dp,tl,MPI_gca);
+  MPI_Type_create_struct(23,bl,dp,tl,MPI_gca);
   MPI_Type_commit(MPI_gca);
    
 } /* end MPI_derived_type_gca() */

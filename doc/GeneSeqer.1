@@ -10,7 +10,7 @@
 .sp
 .fi
 ..
-.TH GeneSeqer 1 "8 October 2008" 
+.TH GeneSeqer 1 "15 February 2014" 
 
 
 .SH NAME
@@ -124,10 +124,9 @@ translation products of the genomic DNA.  This mode does not involve
 pre-screening and is limited to short genomic sequence segments.
 
 .PP
-The \fBGeneSeqer\fP program was developed in the group of Prof. Volker Brendel
-at Iowa State University.
-Information on program availability may be obtained at
-http://bioinformatics.iastate.edu/bioinformatics2go/.
+The \fBGeneSeqer\fP program was developed in the group of Prof. V. Brendel
+and is freely available under the GNU General Public Licence at
+http://brendelgroup.org/bioinformatics2go/GeneSeqer.php/.
 Correspondence relating to \fBGeneSeqer\fP should be addressed to
 
 .PP
@@ -135,19 +134,21 @@ Correspondence relating to \fBGeneSeqer\fP should be addressed to
 .ll -0.3i
 Volker Brendel
 .br
-Department of Genetics, Development and Cell Biology
+Indiana University
 .br
-Iowa State University
+Department of Biology
 .br
-2112 Molecular Biology Building
+212 South Hawthorne Drive
 .br
-Ames IA 50011-3260
+Simon Hall 205C
+.br
+Bloomington, IN 47405
 .br
 U.S.A.
 .br
-phone: (515) 294-9884; fax: (515) 294-6755
+phone: (812) 855-7074
 .br
-email: vbrendel@iastate.edu
+email: vbrendel@indiana.edu
 .ll +0.3i
 
 
@@ -223,7 +224,7 @@ Assume fixed 5' to 3' transcript orientation of supplied EST sequences.
 Display at most \fImaxnest\fP spliced EST alignments per genomic DNA input
 [default: 500].
 .IP "\fB\-M\fP \fIsgmntsze\fP"
-Process input sequence in segments of size \fIsgmntsze\fP [default: 300000;
+Process input sequence in segments of size \fIsgmntsze\fP [default: 240000;
 increased by \fInp\fP * 20000 for the MPI version with \fInp\fP processors].
 The entire input sequence is tiled with overlapping segments, thus all
 significant alignments will be reported independent of the setting. Decrease or
@@ -485,12 +486,12 @@ MAXSGMNTSZE - maximum length of genomic DNA segment as a unit of processing
 .br
 .br
 MAXGLGTH - maximum length of genomic DNA segment for spliced alignment;
-default: 15000
+default: 40000
 .br
-MAXCLGTH - maximum length of cDNA/EST for spliced alignment; default: 8000
+MAXCLGTH - maximum length of cDNA/EST for spliced alignment; default: 16000
 .br
 MAXPLGTH - maximum length of protein sequence for spliced alignment;
-default: 3000
+default: 5000
 .fi
 
 For large applications, memory requirements may become limiting.
@@ -518,8 +519,8 @@ MakeArray(1), SplicePredictor(1).
 A hardcopy of this manual page is obtained by `man -t ./GeneSeqer.1 | lpr'.
 
 \fBGeneSeqer\fP output can be graphically displayed with \fBMyGV\fP; see
-http://bioinformatics.iastate.edu/bioinformatics2go/MyGV/.
+http://brendelgroup.org/bioinformatics2go/MyGV.php/.
 
 
 .SH AUTHOR
-Volker Brendel <vbrendel@iastate.edu>
+Volker Brendel <vbrendel@indiana.edu>

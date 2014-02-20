@@ -1,5 +1,5 @@
-GeneSeqer.   Version of May 15, 2007.
-Date run: Tue May 15 16:30:37 2007
+GeneSeqer.   Version of February 14, 2014.
+Date run: Fri Feb 14 21:04:26 2014
 
 (Bayesian) Splice site model (species):	Arabidopsis thaliana
 Fast search parameters:  (-x) wsize 12, (-y) minqHSP 12, (-z) minqHSPc 30.
@@ -8,7 +8,7 @@ GenBank file: U89959
 
 ________________________________________________________________________________
 Sequence    1:   U89959, from 1 to 106973, both strands analyzed.
-... started  at: Tue May 15 16:30:37 2007
+... started  at: Fri Feb 14 21:04:26 2014
 
 
 EST library file:	ATest1;	matching gDNA +strand ...
@@ -24,8 +24,8 @@ EST library file:	ATest1;	matching gDNA -strand ...
 ... matches indexed, elapsed seconds = 1 HitsTableSize = 37
 
 EST library file:	ATest2;	matching gDNA -strand ...
-... found all matches, elapsed seconds = 1
-... matches indexed, elapsed seconds = 1 HitsTableSize = 111
+... found all matches, elapsed seconds = 0
+... matches indexed, elapsed seconds = 0 HitsTableSize = 111
 
 ********************************************************************************
 EST sequence    111 +strand   525 n (File: 7612443+)
@@ -3303,9 +3303,9 @@ EST sequence     20 -strand   490 n (File: 5843191-)
 
 Predicted gene structure (within gDNA segment 39728 to 37116):
 
- Exon  1  39118  39104 (  15 n);  cDNA      1     15 (  15 n); score: 1.000
-  Intron  1  39103  38998 ( 106 n); Pd: 0.491 (s:    0), Pa: 0.769 (s: 0.88)
- Exon  2  38997  38927 (  71 n);  cDNA     16     85 (  70 n); score: 0.915
+ Exon  1  39118  39104 (  15 n);  cDNA      1     14 (  14 n); score: 0.933
+  Intron  1  39103  38998 ( 106 n); Pd: 0.491 (s:    0), Pa: 0.769 (s: 0.90)
+ Exon  2  38997  38927 (  71 n);  cDNA     15     85 (  71 n); score: 0.930
   Intron  2  38926  38795 ( 132 n); Pd: 0.977 (s: 0.94), Pa: 0.976 (s: 0.98)
  Exon  3  38794  38656 ( 139 n);  cDNA     86    225 ( 140 n); score: 0.953
   Intron  3  38655  38061 ( 595 n); Pd: 0.856 (s: 0.96), Pa: 0.978 (s: 1.00)
@@ -3313,24 +3313,24 @@ Predicted gene structure (within gDNA segment 39728 to 37116):
   Intron  4  37971  37892 (  80 n); Pd: 0.873 (s: 1.00), Pa: 0.935 (s: 0.96)
  Exon  5  37891  37716 ( 176 n);  cDNA    315    490 ( 176 n); score: 0.977
 
-MATCH	U89959-	5843191-	0.965	490	1.000	C
+MATCH	U89959-	5843191-	0.967	490	1.000	C
 PGS_U89959-_5843191-	(39118  39104,38997  38927,38794  38656,38060  37972,37891  37716)
 
 Alignment (genomic DNA sequence = upper lines):
 
 AAAAGATGTT TTGAGGTGTG TTTTGGTTTG GGCCTCCTTT TCCTATTTTA ACCATTGTGC    39059
-|||||||||| |||||                                                  
-AAAAGATGTT TTGAG..... .......... .......... .......... ..........       15
+|||||||||| ||||                                                   
+AAAAGATGTT TTGA-..... .......... .......... .......... ..........       14
 
 
 TTTGTTTCTA AACGTACGAG CCCCCCCTTC TAAACATCAT ATATCTCTTG CAACCATGCA    38999
                                                                   
-.......... .......... .......... .......... .......... ..........       15
+.......... .......... .......... .......... .......... ..........       14
 
 
 GGTTCCGTTT GCAGCTGGTA GGGATCTAAG GCCAGGTCAA CTAGGGAATA TGTTACACAC    38939
-  |||||||   ||||||||| || |||||||  ||||| ||| |||||||||| |||||||||| 
-.-TTCCGTTC NCAGCTGGTA GGNATCTAAG CCCAGGNCAA CTAGGGAATA TGTTACACAC       73
+ ||||||||   ||||||||| || |||||||  ||||| ||| |||||||||| |||||||||| 
+.GTTCCGTTC NCAGCTGGTA GGNATCTAAG CCCAGGNCAA CTAGGGAATA TGTTACACAC       73
 
 
 ATTGTCCAAC TGGTAGTTTT CTTCTTCCCT TAGATCCAGG ATTTTTTGCC TTCTATATCT    38879
@@ -17674,8 +17674,8 @@ GATTTGATCC GACTTGGAGA GAGACTGACT GTTAAAAGTT GCTTACCTGC TCTCGGTTCA    99363
 
 
 GGCTCTTCCA AATGGTGAAG CGTGGATCCC GAACTTGGTT AAGG-CGATA ACTGATGTAG    99304
- || || ||| |||||||||| |||||| ||| || ||||||| |||| ||||| |||||||| | 
-.GCNCTCCCA AATGGTGAAG CGTGGANCCC GA-CTTGGTT AAGGCCGATA ACTGATGTGG      167
+ || || ||| |||||||||| |||||| ||| | |||||||| |||| ||||| |||||||| | 
+.GCNCTCCCA AATGGTGAAG CGTGGANCCC G-ACTTGGTT AAGGCCGATA ACTGATGTGG      167
 
 
 CAA-CAAACC AGAGGAAAG- CAATT-CATG TAGACAAGAA GATGGTAGAT GGATCTTACT    99247
@@ -19434,8 +19434,8 @@ ATATGAAGGG GAAATGTATA TATGGTTTTT TGTAATTGTT TCTATATCAG TAAAGTTTTA   103948
 .......... .......... .......... .......... .......... ..........      114
 
 
-AACTTTTGAA GCTGGTTTAT CTCTTAA-TC TCAGGGTATT GCAGCGGAAA ATCTTTCCAA   104007
-             |   ||   || |||| |    |||||||  | ||| ||||  |||| |||| 
+AACTTTTGAA GCTGGTTTAT CTCTTAATCT CA-GGGTATT GCAGCGGAAA ATCTTTCCAA   104007
+             |   ||   || ||||  |  | ||||||  | ||| ||||  |||| |||| 
 .......... .TTCTNTTGG CTTTTAACTT GAAGGGTATA GAAGCAGAAA GTCTTACCAA      163
 
 
@@ -19860,7 +19860,7 @@ Predicted gene structure (within gDNA segment 101752 to 106494):
   Intron  2 104036 104117 (  82 n); Pd: 0.997 (s: 0.76), Pa: 0.982 (s: 0.84)
  Exon  3 104118 104198 (  81 n);  cDNA    179    259 (  81 n); score: 0.815
   Intron  3 104199 104294 (  96 n); Pd: 0.992 (s: 0.84), Pa: 1.000 (s: 0.83)
- Exon  4 104295 104414 ( 120 n);  cDNA    260    384 ( 125 n); score: 0.713
+ Exon  4 104295 104414 ( 120 n);  cDNA    260    384 ( 125 n); score: 0.712
   Intron  4 104415 105499 (1085 n); Pd: 0.000 (s: 0.67), Pa: 0.994 (s:    0)
  Exon  5 105500 105505 (   6 n);  cDNA    385    390 (   6 n); score: 0.833
 
@@ -19889,8 +19889,8 @@ GAAGGGGAAA TGTATATATG GTTTTTTGTA ATTGTTTCTA TATCAGTAAA GTTTTAAACT   103952
 .......... .......... .......... .......... .......... ..........      101
 
 
-TTTGAAGCTG GTTTATCTCT TAATCT-CAG GGTATTGCAG CGGAAAATCT TTCCAAGCAG   104011
-        |    ||  || | | |  |  || ||||| | || | |||| ||| | |||| ||| 
+TTTGAAGCTG GTTTATCTCT TAA-TCTCAG GGTATTGCAG CGGAAAATCT TTCCAAGCAG   104011
+        |    ||  || | | | |   || ||||| | || | |||| ||| | |||| ||| 
 .......TTC TCTTGGCTTT TNACTTGAAG GGTATAGAAG CAGAAAGTCT TACCAAACAG      154
 
 
@@ -37473,5 +37473,5 @@ Maximal non-overlapping open reading frames (>= 64 codons):
 
 
 
-... finished at: Tue May 15 16:33:38 2007
+... finished at: Fri Feb 14 21:05:26 2014
 

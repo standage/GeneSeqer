@@ -1,4 +1,4 @@
-GeneSeqer-MPI - README_EXAMPLES                                (October 8, 2008)
+GeneSeqer-MPI - README_EXAMPLES                              (February 15, 2014)
 ________________________________________________________________________________
 
 I. Set the number of processors (x) in the lines
@@ -25,19 +25,15 @@ xdiff
   could change, but otherwise the output should be identical.
 
 
-NOTE: We are novices to MPI programming and this implementation is our naive
-      attempt.  There may well be better ways to do this and you may be the one
-      to implement them!  If you like, please let us know.
+NOTES:
 
-      Volker Brendel, vbrendel@iastate.edu
+(1) To evaluate performance of the code, you could produce the binary "GeneSeqerMPIt"
+    with "make -f makefile.lnxMPIt" in ../src and then issue
+    	xrunme >& err.sh.o
+    Peruse "xtimes" and execute this script to generate a record of time points
+    in the GeneSeqerMPI run.
 
-
-ADDITIONAL NOTES:
-
-(1) xrunme has a commented out command line version using mpirun which you can
-    try if you are not using a job scheduler.
-
-(3) gsMPIt.sh is identical to gsMPI.sh, but invokes the binary GeneSeqerMPIt
-    produced in ../src with "make -f makefile.lnxMPIt".  This generates a bunch
-    of time stamps that may be useful for evaluating performance of the code
-    in various phases.  You may find "xtimes" useful to parse the output.
+(2) The directory HPCsubmit-scripts contains a few submit scripts on various
+    HPC resources that use job schedulers.  You will need to make adjustments
+    for the resource you are using according to their instructions, but these
+    template scripts might give you a useful starting point.

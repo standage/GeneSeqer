@@ -1,12 +1,46 @@
 /* sahmtp.c
    Sequence Alignment Hidden Markov Tool - target Protein version
 
-   Copyright (c) 2000 Volker Brendel, Iowa State University, and Jonathan
-   Usuka, Stanford University
-   All rights Reserved.
+   Last update:  February 15, 2014. (VB)
+*/
 
-   Last update:  October 8, 2008. (VB)
- */
+
+/* Corresponding author:                                                      */
+
+/*   Volker Brendel, Department of Biology                                    */
+/*   Indiana University, Bloomington, IN 47405                                */
+/*   (812) 855-7074, vbrendel@indiana.edu                                     */
+
+/* Past contributing authors:                                                 */
+/*   Jonathan Usuka, Department of Chemistry, Stanford University             */
+/*   Wei Zhu, Department of Zoology & Genetics, Iowa State University         */
+/*   Fred Goodman, VisualMetrics Corporation                                  */
+/*   George Juras, VisualMetrics Corporation                                  */
+/*   Michael Sparks, Department of Genetics, Development and Cell Biology,    */
+/*    Iowa State University                                                   */
+
+/*******************************************************************************
+
+    Copyright (C) 2012-2014 Volker Brendel.
+
+    This file is part of GeneSeqer.
+
+    GeneSeqer is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    GeneSeqer is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with GeneSeqer.  If not, see <http://www.gnu.org/licenses/>.
+
+/*******************************************************************************
+
+
 
 /*      INCLUSIONS      */
 
@@ -691,7 +725,7 @@ static void OutputEnds(int ia)
 static void OutputParse(float *pd, float *pa, int ia, int numbp,
   int rflag, char *gname, int glgth, char *pname, int plgth, struct gpalgnmnt *gpa)
 {
-  int i, j, exn = 0, intrA;
+  int i, j, exn = 0;
   int currentState, GBegin, GEnd, PBegin, PEnd;
   int mlgth;
   float escr, oescr, gescr, ogescr, cvrge, simscore;
@@ -715,11 +749,9 @@ static void OutputParse(float *pd, float *pa, int ia, int numbp,
   GBegin = GEnd = Gbeg;
   PBegin = Pbeg;
   PEnd = Pbeg - 1;
-  intrA = Obeg;
   for (i = Obeg + 1; i <= Oend; i++) {
     if (optState[optcounter - 1 - i] != currentState) {
       if (currentState == 0) {
-	intrA = optcounter - 1 - i;
 	if (rflag) {
 	  gpa->gcds[exn][0] = numbp - GBegin + 1;
 	  gpa->gcds[exn][1] = numbp - GEnd + 1;

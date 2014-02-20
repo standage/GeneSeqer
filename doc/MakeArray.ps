@@ -1,17 +1,22 @@
 %!PS-Adobe-3.0
-%%Creator: groff version 1.18.1.1
-%%CreationDate: Wed Oct  8 13:54:31 2008
+%%Creator: groff version 1.22.2
+%%CreationDate: Sat Feb 15 09:32:43 2014
 %%DocumentNeededResources: font Times-Roman
 %%+ font Times-Bold
 %%+ font Times-Italic
 %%+ font Courier
-%%DocumentSuppliedResources: procset grops 1.18 1
+%%DocumentSuppliedResources: procset grops 1.22 2
 %%Pages: 3
 %%PageOrder: Ascend
+%%DocumentMedia: Default 612 792 0 () ()
 %%Orientation: Portrait
 %%EndComments
+%%BeginDefaults
+%%PageMedia: Default
+%%EndDefaults
 %%BeginProlog
-%%BeginResource: procset grops 1.18 1
+%%BeginResource: procset grops 1.22 2
+%!PS-Adobe-3.0 Resource-ProcSet
 /setpacking where{
 pop
 currentpacking
@@ -68,6 +73,7 @@ exch pop add exch pop
 /level0 save def
 1 setlinecap
 1 setlinejoin
+DEFS/BPhook known{DEFS begin BPhook end}if
 72 RES div dup scale
 LS{
 90 rotate
@@ -79,7 +85,7 @@ LS{
 /EP{
 level0 restore
 showpage
-}bind def
+}def
 /DA{
 newpath arcn stroke
 }bind def
@@ -112,22 +118,31 @@ TM setmatrix
 /Fr{
 setrgbcolor fill
 }bind def
+/setcmykcolor where{
+pop
 /Fk{
 setcmykcolor fill
 }bind def
+}if
 /Fg{
 setgray fill
 }bind def
 /FL/fill load def
 /LW/setlinewidth load def
 /Cr/setrgbcolor load def
+/setcmykcolor where{
+pop
 /Ck/setcmykcolor load def
+}if
 /Cg/setgray load def
 /RE{
 findfont
 dup maxlength 1 index/FontName known not{1 add}if dict begin
 {
-1 index/FID ne{def}{pop pop}ifelse
+1 index/FID ne
+2 index/UniqueID ne
+and
+{def}{pop pop}ifelse
 }forall
 /Encoding exch def
 dup/FontName exch def
@@ -164,9 +179,11 @@ newpath
 /CNT countdictstack def
 userdict begin
 /showpage{}def
+/setpagedevice{}def
+mark
 }bind def
 /PEND{
-clear
+cleartomark
 countdictstack CNT sub{end}repeat
 level1 restore
 }bind def
@@ -176,16 +193,21 @@ pop
 setpacking
 }if
 %%EndResource
+%%EndProlog
+%%BeginSetup
+%%BeginFeature: *PageSize Default
+<< /PageSize [ 612 792 ] /ImagingBBox null >> setpagedevice
+%%EndFeature
 %%IncludeResource: font Times-Roman
 %%IncludeResource: font Times-Bold
 %%IncludeResource: font Times-Italic
 %%IncludeResource: font Courier
 grops begin/DEFS 1 dict def DEFS begin/u{.001 mul}bind def end/RES 72
-def/PL 841.89 def/LS false def/ENC0[/asciicircum/asciitilde/Scaron
-/Zcaron/scaron/zcaron/Ydieresis/trademark/quotesingle/Euro/.notdef
+def/PL 792 def/LS false def/ENC0[/asciicircum/asciitilde/Scaron/Zcaron
+/scaron/zcaron/Ydieresis/trademark/quotesingle/Euro/.notdef/.notdef
 /.notdef/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef
 /.notdef/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef/.notdef
-/.notdef/.notdef/.notdef/space/exclam/quotedbl/numbersign/dollar/percent
+/.notdef/.notdef/space/exclam/quotedbl/numbersign/dollar/percent
 /ampersand/quoteright/parenleft/parenright/asterisk/plus/comma/hyphen
 /period/slash/zero/one/two/three/four/five/six/seven/eight/nine/colon
 /semicolon/less/equal/greater/question/at/A/B/C/D/E/F/G/H/I/J/K/L/M/N/O
@@ -210,140 +232,104 @@ def/PL 841.89 def/LS false def/ENC0[/asciicircum/asciitilde/Scaron
 /ugrave/uacute/ucircumflex/udieresis/yacute/thorn/ydieresis]def
 /Courier@0 ENC0/Courier RE/Times-Italic@0 ENC0/Times-Italic RE
 /Times-Bold@0 ENC0/Times-Bold RE/Times-Roman@0 ENC0/Times-Roman RE
-%%EndProlog
+%%EndSetup
 %%Page: 1 1
 %%BeginPageSetup
 BP
 %%EndPageSetup
-/F0 10/Times-Roman@0 SF<4d616b>72 48 Q 350.2<654172726179283129204d616b>
--.1 F<654172726179283129>-.1 E/F1 10.95/Times-Bold@0 SF -.219<4e41>72 84
-S<4d45>.219 E F0<4d616b>108 96 Q<65417272617920ad20537566>-.1 E<8c782041
-7272617920496d706c656d656e746174696f6e20666f722047656e655365716572>-.25
-E F1<53594e4f50534953>72 136.8 Q/F2 10/Times-Bold@0 SF<4d616b>108 148.8
-Q<654172726179>-.1 E F0<5b>2.5 E/F3 10/Times-Italic@0 SF<6462657374>2.85
-E F0<5d>3.18 E F1<4445534352495054494f4e>72 189.6 Q F2<4d616b>108 201.6
-Q<654172726179>-.1 E F0 .552<697320616e20696d706c656d656e746174696f6e20
-6f6620746865204d616e62657220616e64204d79657220737566>3.052 F .552<8c7820
-617272617920616c676f726974686d20285265666572656e636520312920666f72206170
-706c692d>-.25 F 1.164
-<636174696f6e7320696e20636f6e6a756e6374696f6e207769746820746865>108
-213.6 R F2<47656e655365716572>3.664 E F0 1.164
-<70726f6772616d20285265666572656e63652032292e>3.664 F 1.164
-<5468652064697374726962>6.164 F 1.165<757465642076>-.2 F 1.165
-<657273696f6e20697320616e20696d706c652d>-.15 F 1.301
-<6d656e746174696f6e206279204672656420476f6f646d616e20616e642047656f72>
-108 225.6 R 1.301
-<6765204a7572617320696e20636f6c6c61626f726174696f6e20776974682056>-.18 F
-1.3<697375616c4d65747269637320436f72706f726174696f6e2028756e7075622d>-.6
-F<6c6973686564292e>108 237.6 Q 3.366
-<496e666f726d6174696f6e206f6e2070726f6772616d2061>108 278.4 R -.25<7661>
--.2 G 3.366<696c6162696c697479206d6179206265206f627461696e65642061742068
-7474703a2f2f62696f696e666f726d61746963732e696173746174652e6564752f62696f
-696e666f726d61742d>.25 F 2.5
-<69637332676f2f2e20436f72726573706f6e64656e6365>108 290.4 R
-<72656c6174696e6720746f>2.5 E F2<4d616b>2.5 E<654172726179>-.1 E F0<2f>A
-F2<47656e655365716572>A F0<73686f756c642062652061646472657373656420746f>
-2.5 E -1.29<566f>129.6 319.2 S<6c6b>1.29 E<6572204272656e64656c>-.1 E
-<4465706172746d656e74206f662047656e65746963732c204465>129.6 331.2 Q -.15
-<7665>-.25 G<6c6f706d656e7420616e642043656c6c2042696f6c6f6779>.15 E
-<496f>129.6 343.2 Q .2 -.1<77612053>-.25 H<7461746520556e69>.1 E -.15
-<7665>-.25 G<7273697479>.15 E
-<32313132204d6f6c6563756c61722042696f6c6f6779204275696c64696e67>129.6
-355.2 Q<416d65732049412035303031312d33323630>129.6 367.2 Q<552e532e412e>
-129.6 379.2 Q<70686f6e653a202835313529203239342d393838343b2066>129.6
-391.2 Q<61783a202835313529203239342d36373535>-.1 E
-<656d61696c3a20766272656e64656c40696173746174652e656475>129.6 403.2 Q F1
-<5245464552454e434553>72 444 Q F0<312e204d616e626572>129.6 456 Q 2.5
-<2c55>-.4 G 2.5<2e264d>-2.5 G<796572732c20472e20283139393329>-2.5 E F3
-<537566>129.6 468 Q<8c7820617272>-.18 E<6179733a2061206e65>-.15 E 2.5
-<776d>-.15 G<6574686f6420666f72206f6e2d6c696e652073656172>-2.5 E -.15
-<6368>-.37 G<2e>.15 E F0
-<5349414d204a2e20436f6d7075742e2032322c203933382d3934352e>129.6 480 Q
-<322e205573756b612c204a2e2c205a68752c2057>129.6 508.8 Q 2.5<2e2642>-.92
-G<72656e64656c2c2056>-2.5 E 2.5<2e28>-1.29 G<3230303029>-2.5 E F3
-<4f7074696d616c2073706c6963656420616c69676e6d656e74206f6620686f6d6f6c6f>
-129.6 520.8 Q<676f75732063444e>-.1 E 2.5<4174>-.27 G 2.5<6f6167>-2.5 G
-<656e6f6d696320444e>-2.6 E 2.5<4174>-.27 G<656d706c617465>-2.5 E<2e>-.15
-E F0<42696f696e666f726d61746963732031362c203230332d3231312e>129.6 532.8
-Q F1<555341>72 573.6 Q<4745>-.602 E<496e707574208c6c652066>72 602.4 Q
-<6f726d6174>-.274 E F3 -1.15<4641>108 614.4 S<5354>1.15 E 2.69<418c>-.5
-G .19<6c6520666f726d6174>-2.69 F F0 .19<72656665727320746f207261>2.69 F
-2.69<7773>-.15 G .189<657175656e6365206461746120736570617261746564206279
-206964656e74698c6572206c696e6573206f662074686520666f726d207374617274696e
-67207769746820223e2220666f6c2d>-2.69 F<6c6f>108 626.4 Q
-<776564206279207468652073657175656e6365206e616d652e>-.25 E
-<4578616d706c65733a>108 650.4 Q/F4 10/Courier@0 SF
-<3e67697c73657175656e636531202d2075707065722063617365>144 686.4 Q<414347
-415454474741544341414141544343415447414141474147474747414154435441544147
-4743474741415454474147>144 698.4 Q<434743434147434741435447474354474343
-5454474743474747474741474743435454474743474741>144 710.4 Q F0 2.5<384f>
-274.895 768 S<63746f6265722032303038>-2.5 E<31>197.895 E 0 Cg EP
+/F0 10/Times-Roman@0 SF(Mak)72 48 Q 117.47(eArray\(1\) General)-.1 F
+(Commands Manual)2.5 E(Mak)119.97 E(eArray\(1\))-.1 E/F1 10.95
+/Times-Bold@0 SF -.219(NA)72 84 S(ME).219 E F0(Mak)108 96 Q
+(eArray \255 Suf)-.1 E(\214x Array Implementation for GeneSeqer)-.25 E
+F1(SYNOPSIS)72 136.8 Q/F2 10/Times-Bold@0 SF(Mak)108 148.8 Q(eArray)-.1
+E F0([)2.5 E/F3 10/Times-Italic@0 SF(dbest)2.85 E F0(])3.18 E F1
+(DESCRIPTION)72 189.6 Q F2(Mak)108 201.6 Q(eArray)-.1 E F0 .552
+(is an implementation of the Manber and Myer suf)3.052 F .552
+(\214x array algorithm \(Reference 1\) for appli-)-.25 F 1.164
+(cations in conjunction with the)108 213.6 R F2(GeneSeqer)3.664 E F0
+1.164(program \(Reference 2\).)3.664 F 1.164(The distrib)6.164 F 1.165
+(uted v)-.2 F 1.165(ersion is an imple-)-.15 F 1.301
+(mentation by Fred Goodman and Geor)108 225.6 R 1.301
+(ge Juras in collaboration with V)-.18 F 1.3
+(isualMetrics Corporation \(unpub-)-.6 F(lished\).)108 237.6 Q(The)108
+278.4 Q F2(GeneSeqer)2.771 E F0 .271(pacakge of program w)2.771 F .272
+(as de)-.1 F -.15(ve)-.25 G .272(loped in the group of Prof. V).15 F
+2.772(.B)-1.29 G .272(rendel and is freely a)-2.772 F -.25(va)-.2 G
+(ilable).25 E .098
+(under the GNU General Public Licence at http://brendelgroup.or)108
+290.4 R(g/bioinformatics2go/GeneSeqer)-.18 E 2.597(.php/. Cor)-.55 F(-)
+-.2 E(respondence relating to)108 302.4 Q F2(Mak)2.5 E(eArray)-.1 E F0
+(/)A F2(GeneSeqer)A F0(should be addressed)2.5 E -1.29(Vo)129.6 331.2 S
+(lk)1.29 E(er Brendel)-.1 E(Indiana Uni)129.6 343.2 Q -.15(ve)-.25 G
+(rsity).15 E(Department of Biology)129.6 355.2 Q(212 South Ha)129.6
+367.2 Q(wthorne Dri)-.15 E -.15(ve)-.25 G(Simon Hall 205C)129.6 379.2 Q
+(Bloomington, IN 47405)129.6 391.2 Q(U.S.A.)129.6 403.2 Q
+(phone: \(812\) 855-7074)129.6 415.2 Q(email: vbrendel@indiana.edu)129.6
+427.2 Q F1(REFERENCES)72 468 Q F0(1. Manber)129.6 480 Q 2.5(,U)-.4 G 2.5
+(.&M)-2.5 G(yers, G. \(1993\))-2.5 E F3(Suf)129.6 492 Q(\214x arr)-.18 E
+(ays: a ne)-.15 E 2.5(wm)-.15 G(ethod for on-line sear)-2.5 E -.15(ch)
+-.37 G(.).15 E F0(SIAM J. Comput. 22, 938-945.)129.6 504 Q
+(2. Usuka, J., Zhu, W)129.6 532.8 Q 2.5(.&B)-.92 G(rendel, V)-2.5 E 2.5
+(.\()-1.29 G(2000\))-2.5 E F3(Optimal spliced alignment of homolo)129.6
+544.8 Q(gous cDN)-.1 E 2.5(At)-.27 G 2.5(oag)-2.5 G(enomic DN)-2.6 E 2.5
+(At)-.27 G(emplate)-2.5 E(.)-.15 E F0(Bioinformatics 16, 203-211.)129.6
+556.8 Q F1(USA)72 597.6 Q(GE)-.602 E(Input \214le f)72 626.4 Q(ormat)
+-.274 E F3 -1.15(FA)108 638.4 S(ST)1.15 E 2.689<418c>-.5 G .189
+(le format)-2.689 F F0 .189(refers to ra)2.689 F 2.689(ws)-.15 G .19(eq\
+uence data separated by identi\214er lines of the form starting with ">\
+" fol-)-2.689 F(lo)108 650.4 Q(wed by the sequence name.)-.25 E
+(Examples:)108 674.4 Q/F4 10/Courier@0 SF(>gi|sequence1 - upper case)144
+710.4 Q(ACGATTGGATCAAAATCCATGAAAGAGGGGAATCTATAGGCGGAATTGAG)144 722.4 Q
+F0(15 February 2014)270.45 768 Q(1)193.45 E 0 Cg EP
 %%Page: 2 2
 %%BeginPageSetup
 BP
 %%EndPageSetup
-/F0 10/Times-Roman@0 SF<4d616b>72 48 Q 350.2<654172726179283129204d616b>
--.1 F<654172726179283129>-.1 E/F1 10/Courier@0 SF<3e53513b73657175656e63
-6532202d20757070657220636173652077697468206e756d626572696e67>144 84 Q 12
-<3141>186 96 S<43474154544747415420434141414154434341542047414141474147
-47474720414154435441544147472043474741415454474147>-12 E 6
-<35312043474343414743474143>180 108 R
-<54474743544743435454204747434747474747414720474343545447474347472041>6
-E<3e76625f73657175656e636533202d206c6f7765722063617365>144 132 Q<616367
-617474676761746361616161746363617467616161676167676767616174637461746167
-676367676161747467616763676363616763676163>144 144 Q
-<74676763746763637474676763676767676761676763637474676763676761>144 156
-Q<3e76623a73657175656e636534202d206d6978656420666f726d6174>144 180 Q 12
-<3141>186 192 S<43474154544747415420434141414154434341542047414141474147
-47474720414154435441544147472047474747474741544354>-12 E
-<63676363616763676163>144 204 Q 36
-<746767637467636374207467676367676767672041474743435454474743474741>192
-216 R/F2 10.95/Times-Bold@0 SF<4f7574707574>72 268.8 Q F0 .273
-<4f757470757420746f207374616e64617264206f7574707574206769>108 280.8 R
--.15<7665>-.25 G 2.773<7373>.15 G .273<746174697374696373206f6620746865
-204553542064617461626173652c20696e636c7564696e67206e756d626572206f662073
-657175656e6365732c20746f74616c206c656e6774682c>-2.773 F<6d696e696d756d20
-616e64206d6178696d756d2073657175656e6365206c656e6774682c20616e64206c656e
-6774682064697374726962>108 292.8 Q<7574696f6e2e>-.2 E .843<496e20616464
-6974696f6e2c207468652070726f6772616d2070726f647563657320666f75722062696e
-617279208c6c6573207468617420617265207265616420627920746865>108 316.8 R
-/F3 10/Times-Bold@0 SF<47656e655365716572>3.342 E F0 .842
-<70726f6772616d2028>3.342 F F3<47656e655365716572>A F0<6f7074696f6e3a>
-108 328.8 Q F3<2d6444>2.5 E/F4 10/Times-Italic@0 SF<6462657374>2.5 E F0
-<293a>A F4<64626573742e646174>110.5 357.6 Q F0<44617461208c6c652e>144
-369.6 Q F4<64626573742e696e64>110.5 386.4 Q F0<496e6465>144 398.4 Q 2.5
-<788c>-.15 G<6c652e>-2.5 E F4<64626573742e737566>110.5 415.2 Q F0
-<537566>144 427.2 Q<8c78204172726179208c6c652e>-.25 E F4
-<64626573742e7472>110.5 444 Q<65>-.37 E F0<4c63702054>144 456 Q
-<726565208c6c652e>-.35 E F2<434f4d50494c41>72 496.8 Q
-<54494f4e204f5054494f4e53>-1.04 E F0<546865206d696e696d616c20616c6c6f>
-108 508.8 Q<7765642073657175656e6365206c656e67746820697320736574206279>
--.25 E<2364658c6e65204d696e5365714c656e>108 532.8 Q<78>28.84 E
-<696e2047454e4553455145522f7372632f457374446174612e632028646566>108
-556.8 Q<61756c742076>-.1 E<616c75653a2078203d203132292e>-.25 E F2
-<46494c4553>72 597.6 Q F0<47454e4553455145522f524541444d45>108 609.6 Q
-<47454e4553455145522f62696e>108 621.6 Q
-<47454e4553455145522f64617461202865>108 633.6 Q<78616d706c657329>-.15 E
-<47454e4553455145522f646f632f4d616b>108 645.6 Q<654172726179>-.1 E
-<2e31202874686973208c6c6529>-.65 E<47454e4553455145522f696e636c756465>
-108 657.6 Q<47454e4553455145522f737263>108 669.6 Q 2.5<384f>274.895 768
-S<63746f6265722032303038>-2.5 E<32>197.895 E 0 Cg EP
+/F0 10/Times-Roman@0 SF(Mak)72 48 Q 117.47(eArray\(1\) General)-.1 F
+(Commands Manual)2.5 E(Mak)119.97 E(eArray\(1\))-.1 E/F1 10/Courier@0 SF
+(CGCCAGCGACTGGCTGCCTTGGCGGGGGAGGCCTTGGCGGA)144 84 Q
+(>SQ;sequence2 - upper case with numbering)144 108 Q 12(1A)186 120 S
+(CGATTGGAT CAAAATCCAT GAAAGAGGGG AATCTATAGG CGGAATTGAG)-12 E 6
+(51 CGCCAGCGAC)180 132 R(TGGCTGCCTT GGCGGGGGAG GCCTTGGCGG A)6 E
+(>vb_sequence3 - lower case)144 156 Q
+(acgattggatcaaaatccatgaaagaggggaatctataggcggaattgagcgccagcgac)144 168 Q
+(tggctgccttggcgggggaggccttggcgga)144 180 Q(>vb:sequence4 - mixed format)
+144 204 Q 12(1A)186 216 S
+(CGATTGGAT CAAAATCCAT GAAAGAGGGG AATCTATAGG GGGGGGATCT)-12 E(cgccagcgac)
+144 228 Q 36(tggctgcct tggcggggg AGGCCTTGGCGGA)192 240 R/F2 10.95
+/Times-Bold@0 SF(Output)72 292.8 Q F0 .274(Output to standard output gi)
+108 304.8 R -.15(ve)-.25 G 2.774(ss).15 G .273(tatistics of the EST dat\
+abase, including number of sequences, total length,)-2.774 F
+(minimum and maximum sequence length, and length distrib)108 316.8 Q
+(ution.)-.2 E .843(In addition, the program produces four binary \214le\
+s that are read by the)108 340.8 R/F3 10/Times-Bold@0 SF(GeneSeqer)3.343
+E F0 .843(program \()3.343 F F3(GeneSeqer)A F0(option:)108 352.8 Q F3
+(-dD)2.5 E/F4 10/Times-Italic@0 SF(dbest)2.5 E F0(\):)A F4(dbest.dat)
+110.5 381.6 Q F0(Data \214le.)144 393.6 Q F4(dbest.ind)110.5 410.4 Q F0
+(Inde)144 422.4 Q 2.5<788c>-.15 G(le.)-2.5 E F4(dbest.suf)110.5 439.2 Q
+F0(Suf)144 451.2 Q(\214x Array \214le.)-.25 E F4(dbest.tr)110.5 468 Q(e)
+-.37 E F0(Lcp T)144 480 Q(ree \214le.)-.35 E F2(COMPILA)72 520.8 Q
+(TION OPTIONS)-1.04 E F0(The minimal allo)108 532.8 Q
+(wed sequence length is set by)-.25 E(#de\214ne MinSeqLen)108 556.8 Q(x)
+28.84 E(in GENESEQER/src/EstData.c \(def)108 580.8 Q(ault v)-.1 E
+(alue: x = 12\).)-.25 E F2(FILES)72 621.6 Q F0(GENESEQER/README)108
+633.6 Q(GENESEQER/bin)108 645.6 Q(GENESEQER/data \(e)108 657.6 Q
+(xamples\))-.15 E(GENESEQER/doc/Mak)108 669.6 Q(eArray)-.1 E
+(.1 \(this \214le\))-.65 E(GENESEQER/include)108 681.6 Q(GENESEQER/src)
+108 693.6 Q(15 February 2014)270.45 768 Q(2)193.45 E 0 Cg EP
 %%Page: 3 3
 %%BeginPageSetup
 BP
 %%EndPageSetup
-/F0 10/Times-Roman@0 SF<4d616b>72 48 Q 350.2<654172726179283129204d616b>
--.1 F<654172726179283129>-.1 E/F1 10.95/Times-Bold@0 SF
-<53454520414c534f>72 84 Q F0
-<47656e6553657165722831292c2053706c696365507265646963746f722831292e>108
-96 Q F1<4e4f>72 136.8 Q<544553>-.438 E F0 2.5<4168>108 148.8 S
-<617264636f70>-2.5 E 2.5<796f>-.1 G 2.5<6674>-2.5 G<686973206d616e75616c
-2070616765206973206f627461696e656420627920606d616e202d74202e2f4d616b>
--2.5 E<654172726179>-.1 E<2e31207c206c7072272e>-.65 E F1 -.548<4155>72
-189.6 S<54484f52>.548 E F0 -1.29<566f>108 201.6 S<6c6b>1.29 E
-<6572204272656e64656c203c766272656e64656c40696173746174652e6564753e>-.1
-E 2.5<384f>274.895 768 S<63746f6265722032303038>-2.5 E<33>197.895 E 0 Cg
-EP
+/F0 10/Times-Roman@0 SF(Mak)72 48 Q 117.47(eArray\(1\) General)-.1 F
+(Commands Manual)2.5 E(Mak)119.97 E(eArray\(1\))-.1 E/F1 10.95
+/Times-Bold@0 SF(SEE ALSO)72 84 Q F0
+(GeneSeqer\(1\), SplicePredictor\(1\).)108 96 Q F1(NO)72 136.8 Q(TES)
+-.438 E F0 2.5(Ah)108 148.8 S(ardcop)-2.5 E 2.5(yo)-.1 G 2.5(ft)-2.5 G
+(his manual page is obtained by `man -t ./Mak)-2.5 E(eArray)-.1 E
+(.1 | lpr'.)-.65 E F1 -.548(AU)72 189.6 S(THOR).548 E F0 -1.29(Vo)108
+201.6 S(lk)1.29 E(er Brendel <vbrendel@vbrendel.edu>)-.1 E
+(15 February 2014)270.45 768 Q(3)193.45 E 0 Cg EP
 %%Trailer
 end
 %%EOF

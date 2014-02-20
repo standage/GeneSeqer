@@ -1,12 +1,42 @@
 /* sahmtd.c
    Sequence Alignment Hidden Markov Tool - DNA version
 
-   Copyright (c) 2000 Volker Brendel, Iowa State University, and Jonathan
-   Usuka, Stanford University
-   All rights Reserved.
+   Last update:  February 15, 2014. (VB)
+*/
 
-   Last update:  October 8, 2008. (VB)
- */
+
+/* Corresponding author:                                                      */
+
+/*   Volker Brendel, Department of Biology                                    */
+/*   Indiana University, Bloomington, IN 47405                                */
+/*   (812) 855-7074, vbrendel@indiana.edu                                     */
+
+/* Past contributing authors:                                                 */
+/*   Jonathan Usuka, Department of Chemistry, Stanford University             */
+
+/*******************************************************************************
+
+    Copyright (C) 2012-2014 Volker Brendel.
+
+    This file is part of GeneSeqer.
+
+    GeneSeqer is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    GeneSeqer is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with GeneSeqer.  If not, see <http://www.gnu.org/licenses/>.
+
+*******************************************************************************/
+
+
+
 #define GENESEQER
 #define LTFLAG	0
 
@@ -994,7 +1024,7 @@ static void OutputAlignment(int numbp, int rflag, struct gcalgnmnt *gca)
   AppendChar('\0');
   if ((gca->algnmnt = (char *) calloc(nextFree+1, sizeof(char))) == NULL)
     fatal_error("Error: memory allocation failed. Exit.\n");
-  if (LTFLAG) fprintf(stdout,"\nALLOC_ALN1 %d # %d",(int)(gca->algnmnt),++NALLOC_ALN);
+  if (LTFLAG) fprintf(stdout,"\nALLOC_ALN1 %ld # %d",(long)(gca->algnmnt),++NALLOC_ALN);
   strcpy(gca->algnmnt, global_algnmnt);
 
 }							/* end OutputAlignment() */
@@ -1356,10 +1386,10 @@ int end2 = MAX(gca2p->gcds[0][0],gca2p->gcds[gca2p->exn - 1][1]);
 void free_gca(struct gcalgnmnt *gca)
 {
   if (gca->algnmnt != NULL) {
-    if (LTFLAG) fprintf(stdout,"\nDEALLOC_ALN1 %d # %d",(int)(gca->algnmnt),++NDEALLOC_ALN);
+    if (LTFLAG) fprintf(stdout,"\nDEALLOC_ALN1 %ld # %d",(long)(gca->algnmnt),++NDEALLOC_ALN);
     free((char *)gca->algnmnt);
   }
-  if (LTFLAG) fprintf(stdout,"\nDEALLOC_GCA %d # %d",(int)gca,++NDEALLOC_GCA);
+  if (LTFLAG) fprintf(stdout,"\nDEALLOC_GCA %ld # %d",(long)gca,++NDEALLOC_GCA);
   free((struct gcalgnmnt *) gca);
 }							/* end free_gca() */
 
@@ -1770,15 +1800,15 @@ int i,j;
   }
   gca1->score = gca2->score;
   if (gca1->algnmnt!=NULL) {
-    if (LTFLAG) fprintf(stdout,"\nDEALLOC_ALN2 %d # %d",(int)(gca1->algnmnt),++NDEALLOC_ALN);
+    if (LTFLAG) fprintf(stdout,"\nDEALLOC_ALN2 %ld # %d",(long)(gca1->algnmnt),++NDEALLOC_ALN);
     free((char *)gca1->algnmnt);
   }
   if ((gca1->algnmnt = (char *) calloc(strlen(gca2->algnmnt)+1, sizeof(char))) == NULL)
     fatal_error("Error: memory allocation failed. Exit.\n");
-  if (LTFLAG) fprintf(stdout,"\nALLOC_ALN2 %d # %d",(int)(gca1->algnmnt),++NALLOC_ALN);
+  if (LTFLAG) fprintf(stdout,"\nALLOC_ALN2 %ld # %d",(long)(gca1->algnmnt),++NALLOC_ALN);
   strcpy(gca1->algnmnt,gca2->algnmnt);
   if (gca2->algnmnt!=NULL) {
-    if (LTFLAG) fprintf(stdout,"\nDEALLOC_ALN3 %d # %d",(int)(gca2->algnmnt),++NDEALLOC_ALN);
+    if (LTFLAG) fprintf(stdout,"\nDEALLOC_ALN3 %ld # %d",(long)(gca2->algnmnt),++NDEALLOC_ALN);
     free((char *)gca2->algnmnt);
   }
 
@@ -1973,7 +2003,7 @@ int consolidate_gca(struct gcalgnmnt **gcahpp, int *ngca)
   *ngca = 0;
   while (ip != NULL) {
     if (ip->exn < 1) {			/* ... discard low quality gcas */
-      if (LTFLAG) fprintf(stdout,"\nLOW QUALITY: GCA %s (%d %d) DISCARDED\n",ip->cname,ip->calln,(int)ip);
+      if (LTFLAG) fprintf(stdout,"\nLOW QUALITY: GCA %s (%d %ld) DISCARDED\n",ip->cname,ip->calln,(long)ip);
       tmp = ip->next;
       free_gca(ip);
       ip = tmp;
@@ -1982,7 +2012,7 @@ int consolidate_gca(struct gcalgnmnt **gcahpp, int *ngca)
     tmp = ip->next;
     ip->next = NULL;
     if (insert_gca(&newheadp, ip) == 0) {
-      if (LTFLAG) fprintf(stdout,"\nNO-INSERT %s %d %d (%d exons; %d %d)",ip->cname,ip->calln,(int)ip,ip->exn,ip->gcds[0][0],ip->gcds[ip->exn-1][1]);
+      if (LTFLAG) fprintf(stdout,"\nNO-INSERT %s %d %ld (%d exons; %d %d)",ip->cname,ip->calln,(long)ip,ip->exn,ip->gcds[0][0],ip->gcds[ip->exn-1][1]);
       free_gca(ip);
       rval = 1;
     }
@@ -2155,7 +2185,7 @@ int gca2pgl(pglhpp, pglp, gcap)
   if (pglp == NULL) {
     if ((pgl = (struct pgl *) calloc(1 , sizeof(struct pgl))) == NULL)
        fatal_error("Error: memory allocation failed. Exit.\n");
-    if (LTFLAG) fprintf(stdout,"\nALLOC_PGL %d # %d",(int)pgl,++NALLOC_PGL);
+    if (LTFLAG) fprintf(stdout,"\nALLOC_PGL %ld # %d",(long)pgl,++NALLOC_PGL);
     gcap->link = NULL;
     if (LTFLAG) fprintf(stdout,"\nCREATING new pgl from gca %s %d %d\n",gcap->cname,gcap->gcds[0][0],gcap->gcds[gcap->exn-1][1]);
     pgl->gca = gcap;
@@ -2167,7 +2197,7 @@ int gca2pgl(pglhpp, pglp, gcap)
       pgl->rflag = 1;
     pgl->nags = 0;
     if (insert_pgl(pglhpp, pgl) == 0) {
-      if (LTFLAG) fprintf(stdout,"\nDEALLOC_PGL %d # %d NO-INSERT IN gca2pgl",(int)pgl,++NDEALLOC_PGL);
+      if (LTFLAG) fprintf(stdout,"\nDEALLOC_PGL %ld # %d NO-INSERT IN gca2pgl",(long)pgl,++NDEALLOC_PGL);
       free(pgl);
     }
   }
@@ -3170,7 +3200,7 @@ int consolidate_pgl(struct pgl **pglhpp, int *npgl)
     tmp = ip->next;
     ip->next = NULL;
     if (insert_pgl(&newheadp, ip) == 0) {
-      if (LTFLAG) fprintf(stdout,"\nDEALLOC_PGL %d # %d NO-INSERT IN consolidate_pgl\n",(int)ip,++NDEALLOC_PGL);
+      if (LTFLAG) fprintf(stdout,"\nDEALLOC_PGL %ld # %d NO-INSERT IN consolidate_pgl\n",(long)ip,++NDEALLOC_PGL);
       free(ip);
       rval = 1;
     }
@@ -3343,7 +3373,7 @@ void free_pgl(struct pgl *pgl)
 
   while (tpgl != NULL) {
     tpgl = pgl->next;
-    if (LTFLAG) fprintf(stdout,"\nDEALLOC_PGL %d # %d",(int)pgl,++NDEALLOC_PGL);
+    if (LTFLAG) fprintf(stdout,"\nDEALLOC_PGL %ld # %d",(long)pgl,++NDEALLOC_PGL);
     free((struct pgl *) pgl);
     pgl = tpgl;
   }

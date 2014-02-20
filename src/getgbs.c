@@ -3,8 +3,10 @@
 /* Dependencies:                                                              */
 /* Bugs:                                                                      */
 
-/*   Volker Brendel, Department of Zoology & Genetics, Iowa State University, */
-/*   Ames, IA 50010-3260; (515) 294-9884, vbrendel@iastate.edu                */
+
+/*   Volker Brendel, Department of Biology                                    */
+/*   Indiana University, Bloomington, IN 47405                                */
+/*   vbrendel@indiana.edu                                                     */
 /*
    ; 07/23/00 changed by: (FKG) Fred Goodman, Promula Development Corporation
    ;                    : to use the TOPS database/suffix array algorithm

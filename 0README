@@ -1,4 +1,4 @@
-GeneSeqer/SplicePredictor.                         Version 5.0 (August 16, 2012)
+GeneSeqer/SplicePredictor.                       Version 5.1 (February 15, 2014)
 ________________________________________________________________________________
 
 UTILITY:	Gene prediction by spliced alignment 
@@ -52,6 +52,28 @@ make [system-type]	(options: aix, hp_ux, linux, sgi, sun-os, win)
 make install		(default location for binaries: /usr/local/bin)
 cd ../data		(see 0README_EXAMPLES)
 
+(Note: To install the binaries in a different directory, change the value
+       of the INSTALLDIR variable in Makefile. Alternatively, provide the
+       value on the commandline, e.g.
+
+make INSTALLDIR=~/bin install
+)
+
+
+BINARIES:
+
+  The file include/sahmt.h sets a number of parameters for compilation. The
+  provided makefiles invoke three different choices: sahmt.hLRG, sahmt.hMED
+  (= sahmt.hDEF), and sahmt.SML and generate corresponding binaries
+  GeneSeqerL, GeneSeqerM (= GeneSeqer), and GeneSeqerS (or GeneSeqerMPI[l|m|s];
+  see below). Explore what works best for your system and application.  The
+  difference is the size of spliced alignment attempted: *L will allow a gene
+  size up to 100000 nucleotides and cDNA length up to 30000 nucleotides, whereas
+  *S limits the sizes to 15000 and 8000, respectively.  GeneSeqer will print
+  out a WARNING message if it reaches the specified limits.  If you see
+  WARNING messages in your output, increased sizes could be tried - which will
+  take more memory and time.
+
 
 OPTIONAL PARALLEL IMPLEMENTATION USING Open MPI:
 
@@ -74,7 +96,7 @@ mpicc -showme:link
  recorded in src/makefile.lnxMPI are
 
 MPIHOME  = /usr/lib64/openmpi
-MPICC    = $(MPIHOME)/bin/mpicc -I/usr/include/openmpi-x86_64 -pthread -m64 -pthread -m64 -L/usr/lib64/openmpi/lib -lmpi -ldl
+MPICC    = $(MPIHOME)/bin/mpicc -I/usr/include/openmpi-x86_64 -pthread -m64 -L/usr/lib64/openmpi/lib -lmpi -ldl
 
  Thus, to compile the MPI version of GeneSeqer, do the following:
 

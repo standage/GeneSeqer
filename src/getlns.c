@@ -1,10 +1,11 @@
-/* GETLNS.C;                                        Last update: May 1, 2004. */
+/* GETLNS.C;                                      Last update: April 3, 2013. */
 /*   - a subroutine to read a nucleic acid sequence in library file format.   */
 /* Dependencies:                                                              */
 /* Bugs:                                                                      */
 
-/*   Volker Brendel, Department of Zoology & Genetics, Iowa State University, */
-/*   Ames, IA 50010-3260; (515) 294-9884, vbrendel@iastate.edu                */
+/*   Volker Brendel, Department of Biology                                    */
+/*   Indiana University, Bloomington, IN 47405                                */
+/*   vbrendel@indiana.edu                                                     */
 /*   
    ; 07/23/00 changed by: (FKG) Fred Goodman, Promula Development Corporation
    ;                    : to use the TOPS database/suffix array algorithm
@@ -51,7 +52,7 @@ int getlns(int LibraryFile, char detsz, char noffset, char *sfname, char *seq)
     return (0);
   }
 
-  if (strlen(buf) == LINELGTH-1 && buf[LINELGTH-1] != '\n') {
+  if (strlen(buf) == LINELGTH-1 && buf[LINELGTH-2] != '\n') {
     while ((ch = getCharacterRawTextFile(LibraryFile)) != '\n' && ch != RAW_TEXT_EOF) continue;
   }
 

@@ -1,4 +1,4 @@
-/*daPll.h;                   Last update: October 8, 2008, by Volker Brendel. */
+/*daPll.h;                 Last update: February 15, 2014, by Volker Brendel. */
 /*Logitlinear splice site model parameters and subroutines for GeneSeqer.c    */
 
 #define NSPECIES 2
